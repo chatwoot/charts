@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    {{- include "sidekiq.labels" . | nindent 4 }}
+  name: {{ .Values.applicationArch.backgroundProc.name }}-sidekiq-deployment
+spec:
+  replicas: {{ int .Values.deployment.image.dockerHub.chatwoot.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sidekiq.labels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        {{- include "sidekiq.labels" . | nindent 8 }}
+    spec:
+      initContainers:
+      {{- include "chatwoot_helm.waitForMigrations" . | nindent 8}}
+      containers:
+        - args:
+            - bundle
+            - exec
+            - sidekiq
+            - -C
+            - config/sidekiq.yml
+          env:
+            {{- include "chatwoot-helm.environ" .  }}
+          image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
+          name: sidekiq
+          resources: {}
+          imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
+
+status: {}

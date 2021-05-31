@@ -1,0 +1,201 @@
+# Default values for chatwoot_helm.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+applicationArch:
+  rails:
+    name: chatwoot
+    version: 1.16.0
+  backgroundProc:
+    name: sidekiq
+    version: 6.0.2
+  storage:
+    db:
+      name: postgres
+      version: 12
+    dataStore:
+      name: redis
+      version: alpine
+      local: true
+
+deployment:
+  image:
+    dockerHub:
+      chatwoot:
+        name: chatwoot-base
+        owner: chatwoot
+        repository: chatwoot
+        tag: latest
+        port: 3000
+        restartPolicy: Always
+        replicaCount: 1
+      database:
+        repository: postgres
+        tag: 12
+        port: 5432
+        restartPolicy: Always
+        replicaCount: 1
+      redis:
+        repository: redis
+        tag: alpine
+        port: 6379
+        restartPolicy: Always
+        replicaCount: 1
+    imagePullPolicy: Always
+    restartPolicy: OnFailure
+  # Overrides the image tag whose default is the chart appVersion.
+
+services:
+  rails:
+    name: rails-3000
+    port: 3000
+    targetPort: 3000
+    type: LoadBalancer
+
+  postgres:
+    name: postgres-5432
+    port: 5432
+    targetPort: 5432
+    type: ""
+
+  redis:
+    name: redis-6379
+    port: 6379
+    targetPort: 6379
+    type: ""
+
+volumes:
+  postgres:
+    accessModes: ReadWriteOnce
+    storage: 50Mi
+    local: true
+
+  redis:
+    accessModes: ReadWriteOnce
+    storage: 20Mi
+    local: true
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: ""
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: chatwoot-service
+              port:
+                number: 3000
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# ENVIRONMENT VARIABLES
+env:
+  ACTIVE_STORAGE_SERVICE: local
+  ASSET_CDN_HOST: ""
+  AWS_ACCESS_KEY_ID: ""
+  AWS_REGION: ""
+  AWS_SECRET_ACCESS_KEY: ""
+  AWS_ENDPOINT_URL: ""
+  ENABLE_ACCOUNT_SIGNUP: "false"
+  FB_APP_ID: ""
+  FB_APP_SECRET: ""
+  FB_VERIFY_TOKEN: ""
+  FORCE_SSL: "false"
+  FRONTEND_URL: "http://0.0.0.0:3000/"
+  IOS_APP_ID: 6C953F3RX2.com.chatwoot.app
+  LOG_LEVEL: info
+  LOG_SIZE: "500"
+  MAILER_INBOUND_EMAIL_DOMAIN: ""
+  MAILER_SENDER_EMAIL: ""
+  MAILGUN_INGRESS_SIGNING_KEY: ""
+  MANDRILL_INGRESS_API_KEY: ""
+  POSTGRES_HOST: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_USERNAME: postgres
+  POSTGRES_DB: chatwoot_production
+  RAILS_ENV: production
+  RAILS_INBOUND_EMAIL_PASSWORD: ""
+  RAILS_INBOUND_EMAIL_SERVICE: ""
+  RAILS_LOG_TO_STDOUT: "true"
+  RAILS_MAX_THREADS: "5"
+  REDIS_PASSWORD: ""
+  REDIS_SENTINEL_MASTER_NAME: ""
+  REDIS_SENTINELS: ""
+  REDIS_URL: redis://redis:6379
+  S3_BUCKET_NAME: ""
+  SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
+  SENTRY_DSN: ""
+  SLACK_CLIENT_ID: ""
+  SLACK_CLIENT_SECRET: ""
+  SMTP_ADDRESS: ""
+  SMTP_AUTHENTICATION: plain
+  SMTP_ENABLE_STARTTLS_AUTO: "true"
+  SMTP_OPENSSL_VERIFY_MODE: none
+  SMTP_PASSWORD: ""
+  SMTP_PORT: "587"
+  SMTP_USERNAME: ""
+  TWITTER_APP_ID: ""
+  TWITTER_CONSUMER_KEY: ""
+  TWITTER_CONSUMER_SECRET: ""
+  TWITTER_ENVIRONMENT: ""
+  USE_INBOX_AVATAR_FOR_BOT: "true"

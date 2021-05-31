@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.applicationArch.rails.name }}-deployment
+  creationTimestamp: null
+  labels:
+    {{- include "rails.labels" . | nindent 4}}
+spec:
+  replicas: {{ int .Values.deployment.image.dockerHub.chatwoot.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "rails.labels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+
+      creationTimestamp: null
+      labels:
+        {{- include "rails.labels" . | nindent 8 }}
+    spec:
+      initContainers:
+      {{- include "chatwoot_helm.waitForMigrations" . | nindent 6}}
+      
+      containers:
+        - args: 
+            - bundle
+            - exec
+            - rails
+            - s
+            - -p
+            - {{ .Values.deployment.image.dockerHub.chatwoot.port | quote}}
+            - -b
+            - 0.0.0.0
+            
+          command:
+            - docker/entrypoints/rails.sh
+          env:
+            {{- include "chatwoot-helm.environ" .  }}
+          image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
+          name: {{ .Values.deployment.image.dockerHub.chatwoot.name }}
+          ports:
+            - containerPort: {{ int .Values.deployment.image.dockerHub.chatwoot.port }}
+          imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
+          resources: {}
+
+status: {}

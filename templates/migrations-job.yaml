@@ -1,0 +1,68 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migrate
+spec:
+  template:
+    spec:
+      containers:
+      - name: main
+        env:
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              key: FRONTEND_URL
+              name: env
+        - name: POSTGRES_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_HOST
+              name: env
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_PASSWORD
+              name: env
+        - name: POSTGRES_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: POSTGRES_USERNAME
+              name: env
+        - name: RAILS_ENV
+          valueFrom:
+            configMapKeyRef:
+              key: RAILS_ENV
+              name: env
+        - name: SECRET_KEY_BASE
+          valueFrom:
+            configMapKeyRef:
+              key: SECRET_KEY_BASE
+              name: env
+        - name: REDIS_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_PASSWORD
+              name: env
+        - name: REDIS_SENTINEL_MASTER_NAME
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_SENTINEL_MASTER_NAME
+              name: env
+
+        - name: REDIS_SENTINELS
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_SENTINELS
+              name: env
+        - name: REDIS_URL
+          valueFrom:
+            configMapKeyRef:
+              key: REDIS_URL
+              name: env
+        command:
+        - bundle
+        - exec
+        - rails
+        - db:chatwoot_prepare
+        image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
+      restartPolicy: OnFailure
