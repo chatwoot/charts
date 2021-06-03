@@ -1,3 +1,4 @@
+{{- if .Values.volumes.redis.local }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -37,3 +38,4 @@ spec:
             claimName: redis-claim0
     {{- end }}
 status: {}
+{{- end }}

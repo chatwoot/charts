@@ -1,3 +1,4 @@
+{{- if .Values.volumes.postgres.local }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -53,3 +54,4 @@ spec:
             claimName: postgres-claim0
         {{- end }}
 status: {}
+{{- end }}
