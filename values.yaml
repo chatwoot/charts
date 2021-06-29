@@ -169,7 +169,7 @@ env:
   MAILER_SENDER_EMAIL: ""
   MAILGUN_INGRESS_SIGNING_KEY: ""
   MANDRILL_INGRESS_API_KEY: ""
-  POSTGRES_HOST: database-1.casjhc6sexdo.ap-south-1.rds.amazonaws.com
+  POSTGRES_HOST: postgres
   POSTGRES_PORT: 5432
   POSTGRES_PASSWORD: "postgres"
   POSTGRES_USERNAME: "postgres"
@@ -183,7 +183,7 @@ env:
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
   REDIS_HOST: 15.206.207.127
-  REDIS_URL: redis://15.206.207.127:6379
+  REDIS_URL: redis://redis:6379
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
   SENTRY_DSN: ""
