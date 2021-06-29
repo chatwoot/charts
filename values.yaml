@@ -40,7 +40,7 @@ deployment:
         port: 6379
         restartPolicy: Always
         replicaCount: 1
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     restartPolicy: OnFailure
   # Overrides the image tag whose default is the chart appVersion.
 
@@ -66,12 +66,12 @@ services:
 volumes:
   postgres:
     accessModes: ReadWriteOnce
-    storage: 50Mi
+    storage: 1Gi
     local: true
 
   redis:
     accessModes: ReadWriteOnce
-    storage: 20Mi
+    storage: 1Gi
     local: true
 imagePullSecrets: []
 nameOverride: ""
@@ -169,9 +169,10 @@ env:
   MAILER_SENDER_EMAIL: ""
   MAILGUN_INGRESS_SIGNING_KEY: ""
   MANDRILL_INGRESS_API_KEY: ""
-  POSTGRES_HOST: postgres
-  POSTGRES_PASSWORD: postgres
-  POSTGRES_USERNAME: postgres
+  POSTGRES_HOST: database-1.casjhc6sexdo.ap-south-1.rds.amazonaws.com
+  POSTGRES_PORT: 5432
+  POSTGRES_PASSWORD: "postgres"
+  POSTGRES_USERNAME: "postgres"
   POSTGRES_DB: chatwoot_production
   RAILS_ENV: production
   RAILS_INBOUND_EMAIL_PASSWORD: ""
@@ -181,7 +182,8 @@ env:
   REDIS_PASSWORD: ""
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
-  REDIS_URL: redis://redis:6379
+  REDIS_HOST: 15.206.207.127
+  REDIS_URL: redis://15.206.207.127:6379
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
   SENTRY_DSN: ""

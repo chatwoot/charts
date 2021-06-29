@@ -99,6 +99,11 @@
                 configMapKeyRef:
                   key: POSTGRES_HOST
                   name: env
+            - name: POSTGRES_PORT
+              valueFrom:
+                configMapKeyRef:
+                  key: POSTGRES_PORT
+                  name: env
             - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
