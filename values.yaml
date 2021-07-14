@@ -201,3 +201,5 @@ env:
   TWITTER_CONSUMER_SECRET: ""
   TWITTER_ENVIRONMENT: ""
   USE_INBOX_AVATAR_FOR_BOT: "true"
+  # un-comment if using external postgres
+  # DATABASE_URL: "postgresql://uri"
