@@ -182,7 +182,7 @@ env:
   REDIS_PASSWORD: ""
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
-  REDIS_HOST: 15.206.207.127
+  REDIS_HOST: ""
   REDIS_URL: redis://redis:6379
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
