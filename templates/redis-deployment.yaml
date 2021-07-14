@@ -1,0 +1,41 @@
+{{- if .Values.volumes.redis.local }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    {{- include "redis.labels" . | nindent 4 }}
+  name: {{ .Values.applicationArch.storage.dataStore.name }}-deployment
+spec:
+  replicas: {{ int .Values.deployment.image.dockerHub.redis.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "redis.labels" . | nindent 6 }}
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        {{- include "redis.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - image: "{{ .Values.deployment.image.dockerHub.redis.repository }}:{{ .Values.deployment.image.dockerHub.redis.tag }}"
+          name: {{ include "chatwoot_helm.fullname" . }}-redis-deployment
+          ports:
+            - containerPort: {{ int .Values.deployment.image.dockerHub.redis.port }}
+          resources: {}
+        {{- if .Values.volumes.redis.local }}
+          volumeMounts:
+            - mountPath: /data
+              name:  redis-claim0
+        {{- end }}
+          imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
+    {{- if .Values.volumes.redis.local }}
+      volumes:
+        - name: redis-claim0
+          persistentVolumeClaim:
+            claimName: redis-claim0
+    {{- end }}
+status: {}
+{{- end }}
