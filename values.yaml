@@ -182,7 +182,7 @@ env:
   REDIS_PASSWORD: ""
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
-  REDIS_HOST: ""
+  REDIS_HOST: "redis"
   REDIS_URL: redis://redis:6379
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
@@ -201,3 +201,5 @@ env:
   TWITTER_CONSUMER_SECRET: ""
   TWITTER_ENVIRONMENT: ""
   USE_INBOX_AVATAR_FOR_BOT: "true"
+  # un-comment if using external postgres
+  # DATABASE_URL: "postgresql://uri"

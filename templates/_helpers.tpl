@@ -95,6 +95,11 @@ Support containers for migrations
       configMapKeyRef:
         key: POSTGRES_USERNAME
         name: env
+  - name: POSTGRES_PORT
+    valueFrom:
+      configMapKeyRef:
+        key: POSTGRES_PORT
+        name: env
   - name: RAILS_ENV
     valueFrom:
       configMapKeyRef:
@@ -124,6 +129,11 @@ Support containers for migrations
     valueFrom:
       configMapKeyRef:
         key: REDIS_URL
+        name: env
+  - name: DATABASE_URL
+    valueFrom:
+      configMapKeyRef:
+        key: DATABASE_URL
         name: env
   args: 
     - bundle
