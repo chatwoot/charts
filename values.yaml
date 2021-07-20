@@ -148,6 +148,35 @@ tolerations: []
 
 affinity: {}
 
+postgresql:
+  enabled: true
+  nameOverride: chatwoot-postgresql
+  postgresqlDatabase: chatwoot_production
+  postgresqlUsername: postgres
+  postgresqlPassword: postgres
+  # The following variables are only used when internal PG is disabled
+  # postgresqlHost: postgres
+  # postgresqlPort: 5432
+  # When defined the `postgresqlPassword` field is ignored
+  # existingSecret: secret-name
+  # existingSecretKey: postgresql-password
+
+redis:
+  enabled: true
+  nameOverride: chatwoot-redis
+  # The following variables are only used when internal Redis is disabled
+  # host: redis
+  # Just omit the password field if your redis cluster doesn't use password
+  password: redis
+  # port: 6379
+  # When defined the `password` field is ignored
+  # existingSecret: secret-name
+  # existingSecretKey: redis-password
+  master:
+    persistence:
+      enabled: true
+      # If change pvc size redis.master.persistence.size: 20Gi
+
 # ENVIRONMENT VARIABLES
 env:
   ACTIVE_STORAGE_SERVICE: local
@@ -169,7 +198,7 @@ env:
   MAILER_SENDER_EMAIL: ""
   MAILGUN_INGRESS_SIGNING_KEY: ""
   MANDRILL_INGRESS_API_KEY: ""
-  POSTGRES_HOST: postgres
+  POSTGRES_HOST: chatwoot-chatwoot-postgresql
   POSTGRES_PORT: 5432
   POSTGRES_PASSWORD: "postgres"
   POSTGRES_USERNAME: "postgres"
@@ -179,11 +208,11 @@ env:
   RAILS_INBOUND_EMAIL_SERVICE: ""
   RAILS_LOG_TO_STDOUT: "true"
   RAILS_MAX_THREADS: "5"
-  REDIS_PASSWORD: ""
+  REDIS_PASSWORD: "redis"
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
-  REDIS_HOST: "redis"
-  REDIS_URL: redis://redis:6379
+  REDIS_HOST: "chatwoot-chatwoot-redis-master"
+  REDIS_URL: redis://redis@chatwoot-chatwoot-redis-master:6379
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
   SENTRY_DSN: ""
@@ -201,5 +230,5 @@ env:
   TWITTER_CONSUMER_SECRET: ""
   TWITTER_ENVIRONMENT: ""
   USE_INBOX_AVATAR_FOR_BOT: "true"
-  # un-comment if using external postgres
-  # DATABASE_URL: "postgresql://uri"
+  DATABASE_URL: ""
+  CHATWOOT_INSTALLATION_ENV: "helm"
