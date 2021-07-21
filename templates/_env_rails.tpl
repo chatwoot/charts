@@ -249,10 +249,5 @@
                 configMapKeyRef:
                   key: USE_INBOX_AVATAR_FOR_BOT
                   name: env
-            - name: DATABASE_URL
-              valueFrom:
-                configMapKeyRef:
-                  key: DATABASE_URL
-                  name: env
 
 {{- end }}

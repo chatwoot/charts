@@ -1,13 +1,7 @@
-# Helm charts for chatwoot
-(tested on Minikube)
-
-First, enable nginx ingress on minikube cluster using this [link](https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/)
-
-Start the minikube cluster using: minikube start
+# Helm charts for Chatwoot
+Helm charts for [Chatwoot](https://github.com/chatwoot/chatwoot)
 
 ## To install helm chart
-> helm install chart-name ./
+> helm install chatwoot ./
 
-## To access the application
 
-> minikube service --url chatwoot-service
