@@ -61,83 +61,6 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{/*
-Support containers for migrations
-*/}}
-{{- define "chatwoot_helm.waitForMigrations"}}
-{{- $DATABASE_HOST :=  $.Values.env.POSTGRES_HOST }}
-{{- $REDIS_HOST :=   $.Values.env.REDIS_HOST }}
-- name: init-postgres
-  image: busybox:1.28
-  command: ["sh", "-c",  "until nslookup {{ $DATABASE_HOST }}; do echo waiting for {{ $DATABASE_HOST }}; sleep 2; done;"]
-- name: init-redis
-  image: busybox:1.28
-  command: ["sh", "-c", "until nslookup {{ $REDIS_HOST }}; do echo waiting for {{ $REDIS_HOST }}; sleep 2; done;"]
-- name: init-migrations
-  env:
-  - name: FRONTEND_URL
-    valueFrom:
-      configMapKeyRef:
-        key: FRONTEND_URL
-        name: env
-  - name: POSTGRES_HOST
-    valueFrom:
-      configMapKeyRef:
-        key: POSTGRES_HOST
-        name: env
-  - name: POSTGRES_PASSWORD
-    valueFrom:
-      configMapKeyRef:
-        key: POSTGRES_PASSWORD
-        name: env
-  - name: POSTGRES_USERNAME
-    valueFrom:
-      configMapKeyRef:
-        key: POSTGRES_USERNAME
-        name: env
-  - name: POSTGRES_PORT
-    valueFrom:
-      configMapKeyRef:
-        key: POSTGRES_PORT
-        name: env
-  - name: RAILS_ENV
-    valueFrom:
-      configMapKeyRef:
-        key: RAILS_ENV
-        name: env
-  - name: SECRET_KEY_BASE
-    valueFrom:
-      configMapKeyRef:
-        key: SECRET_KEY_BASE
-        name: env
-  - name: REDIS_PASSWORD
-    valueFrom:
-      configMapKeyRef:
-        key: REDIS_PASSWORD
-        name: env
-  - name: REDIS_SENTINEL_MASTER_NAME
-    valueFrom:
-      configMapKeyRef:
-        key: REDIS_SENTINEL_MASTER_NAME
-        name: env
-  - name: REDIS_SENTINELS
-    valueFrom:
-      configMapKeyRef:
-        key: REDIS_SENTINELS
-        name: env
-  - name: REDIS_URL
-    valueFrom:
-      configMapKeyRef:
-        key: REDIS_URL
-        name: env
-  args: 
-    - bundle
-    - exec
-    - rails
-    - db:chatwoot_prepare
-  image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
-{{- end }}
-
 
 {{- define "postgres.labels" }}
 {{- include "chatwoot_helm.labels" . }}
@@ -162,10 +85,18 @@ name: {{ .Values.applicationArch.rails.name}}
 version: {{ .Values.applicationArch.rails.version}}
 {{- end }}
 
-
 {{- define "sidekiq.labels" }}
 {{- include "chatwoot_helm.labels" . }}
 component: rails
 name: {{ .Values.applicationArch.backgroundProc.name}}
 version: {{ .Values.applicationArch.backgroundProc.version}}
+{{- end }}
+
+{{- define "migration-job.labels" }}
+{{- include "chatwoot_helm.labels" . }}
+component: db-migration
+name: db-migration
+version: {{ .Values.applicationArch.rails.version}}
+chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+release: "{{ .Release.Name }}"
 {{- end }}

@@ -17,8 +17,6 @@ spec:
       labels:
         {{- include "sidekiq.labels" . | nindent 8 }}
     spec:
-      initContainers:
-      {{- include "chatwoot_helm.waitForMigrations" . | nindent 8}}
       containers:
         - args:
             - bundle
