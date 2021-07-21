@@ -18,9 +18,6 @@ spec:
       labels:
         {{- include "rails.labels" . | nindent 8 }}
     spec:
-      initContainers:
-      {{- include "chatwoot_helm.waitForMigrations" . | nindent 6}}
-      
       containers:
         - args: 
             - bundle
