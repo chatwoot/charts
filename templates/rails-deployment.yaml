@@ -32,7 +32,7 @@ spec:
           command:
             - docker/entrypoints/rails.sh
           env:
-            {{- include "chatwoot-helm.environ" .  }}
+            {{- include "chatwoot.environ" .  }}
           image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
           name: {{ .Values.deployment.image.dockerHub.chatwoot.name }}
           ports:

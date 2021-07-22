@@ -8,7 +8,7 @@ dependencies:
     name: redis
     repository: https://charts.bitnami.com/bitnami
     version: 14.7.2
-name: chatwoot-helm
+name: chatwoot
 description: A Helm chart for deploying Chatwoot on Kubernetes.
 type: Application
 keywords:

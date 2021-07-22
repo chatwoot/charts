@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "chatwoot_helm.name" -}}
+{{- define "chatwoot.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "chatwoot_helm.fullname" -}}
+{{- define "chatwoot.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "chatwoot_helm.chart" -}}
+{{- define "chatwoot.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "chatwoot_helm.labels" -}}
-helm.sh/chart: {{ include "chatwoot_helm.chart" . }}
-{{ include "chatwoot_helm.selectorLabels" . }}
+{{- define "chatwoot.labels" -}}
+helm.sh/chart: {{ include "chatwoot.chart" . }}
+{{ include "chatwoot.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "chatwoot_helm.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "chatwoot_helm.name" . }}
+{{- define "chatwoot.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "chatwoot.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "chatwoot_helm.serviceAccountName" -}}
+{{- define "chatwoot.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "chatwoot_helm.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "chatwoot.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -63,7 +63,7 @@ Create the name of the service account to use
 
 
 {{- define "postgres.labels" }}
-{{- include "chatwoot_helm.labels" . }}
+{{- include "chatwoot.labels" . }}
 component: database
 name: {{ .Values.applicationArch.storage.db.name }}
 version: {{ .Values.applicationArch.storage.db.version | quote }}
@@ -71,7 +71,7 @@ version: {{ .Values.applicationArch.storage.db.version | quote }}
 
 
 {{- define "redis.labels" }}
-{{- include "chatwoot_helm.labels" . }}
+{{- include "chatwoot.labels" . }}
 component: dataStore
 name: {{ .Values.applicationArch.storage.dataStore.name}}
 version: {{ .Values.applicationArch.storage.dataStore.version}}
@@ -79,21 +79,21 @@ version: {{ .Values.applicationArch.storage.dataStore.version}}
 
 
 {{- define "rails.labels" }}
-{{- include "chatwoot_helm.labels" . }}
+{{- include "chatwoot.labels" . }}
 component: rails
 name: {{ .Values.applicationArch.rails.name}}
 version: {{ .Values.applicationArch.rails.version}}
 {{- end }}
 
 {{- define "sidekiq.labels" }}
-{{- include "chatwoot_helm.labels" . }}
+{{- include "chatwoot.labels" . }}
 component: rails
 name: {{ .Values.applicationArch.backgroundProc.name}}
 version: {{ .Values.applicationArch.backgroundProc.version}}
 {{- end }}
 
 {{- define "migration-job.labels" }}
-{{- include "chatwoot_helm.labels" . }}
+{{- include "chatwoot.labels" . }}
 component: db-migration
 name: db-migration
 version: {{ .Values.applicationArch.rails.version}}

@@ -3,11 +3,10 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   labels:
-    {{- include "chatwoot_helm.labels" . | nindent 4 }}
+    {{- include "chatwoot.labels" . | nindent 4 }}
 
   name: env
 data:
   {{- range $key, $value := .Values.env}}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
-  

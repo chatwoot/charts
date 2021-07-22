@@ -1,4 +1,4 @@
-{{- define "chatwoot-helm.environ" }}
+{{- define "chatwoot.environ" }}
 
             - name: ACTIVE_STORAGE_SERVICE
               valueFrom:

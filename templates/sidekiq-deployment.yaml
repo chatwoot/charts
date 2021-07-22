@@ -25,7 +25,7 @@ spec:
             - -C
             - config/sidekiq.yml
           env:
-            {{- include "chatwoot-helm.environ" .  }}
+            {{- include "chatwoot.environ" .  }}
           image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
           name: sidekiq
           resources: {}
