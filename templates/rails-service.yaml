@@ -5,7 +5,10 @@ metadata:
   creationTimestamp: null
   labels:
     {{- include "rails.labels" . | nindent 4}}
-
+  {{- with .Values.services.rails.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
 spec:
   ports:
     - name: {{ .Values.services.rails.name | quote}}

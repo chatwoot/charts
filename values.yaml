@@ -47,21 +47,29 @@ deployment:
 services:
   rails:
     name: rails-3000
-    port: 3000
+    port: 80
     targetPort: 3000
     type: LoadBalancer
+    # For cloud provider related annotations
+    annotations: {}
+    # For example
+    #  service.beta.kubernetes.io/aws-load-balancer-type: external
+    #  service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    #  service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
 
   postgres:
     name: postgres-5432
     port: 5432
     targetPort: 5432
     type: ""
+    annotations: {}
 
   redis:
     name: redis-6379
     port: 6379
     targetPort: 6379
     type: ""
+    annotations: {}
 
 volumes:
   postgres:
