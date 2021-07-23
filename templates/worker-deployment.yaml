@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     {{- include "sidekiq.labels" . | nindent 4 }}
-  name: {{ .Values.applicationArch.backgroundProc.name }}-sidekiq-deployment
+  name: {{ template "chatwoot.fullname" . }}-worker
 spec:
   replicas: {{ int .Values.deployment.image.dockerHub.chatwoot.replicaCount }}
   selector:
@@ -27,7 +27,7 @@ spec:
           env:
             {{- include "chatwoot.environ" .  }}
           image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
-          name: sidekiq
+          name: {{ .Chart.Name }}-workers
           resources: {}
           imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
 
