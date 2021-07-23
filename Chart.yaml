@@ -8,17 +8,26 @@ dependencies:
     name: redis
     repository: https://charts.bitnami.com/bitnami
     version: 14.7.2
-name: chatwoot-helm
-description: A Helm chart for deploying Chatwoot on Kubernetes.
-type: Application
+name: chatwoot
+description: Open-source customer engagement suite, an alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥
+type: application
 keywords:
   - chatwoot
   - open source
-  - helm
-  - kubernetes
+  - customer support
+  - chat
+  - ruby
+  - rails
+  - crm
 
-type: application
+maintainers:
+  - name: vishnu-narayanan
+    email: vishnu@chatwoot.com
+  - name: sojan-official
+    email: sojan@chatwoot.com
 
-version: 0.3.0
+#This is the chart version.
+version: 0.4.0
 
+#This is application version.
 appVersion: "1.16.0"

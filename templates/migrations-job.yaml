@@ -30,5 +30,5 @@ spec:
         - rails
         - db:chatwoot_prepare
         env:
-            {{- include "chatwoot-helm.environ" .  }}
+            {{- include "chatwoot.environ" .  }}
         imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
