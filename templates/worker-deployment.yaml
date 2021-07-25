@@ -6,7 +6,7 @@ metadata:
     {{- include "sidekiq.labels" . | nindent 4 }}
   name: {{ template "chatwoot.fullname" . }}-worker
 spec:
-  replicas: {{ int .Values.deployment.image.dockerHub.chatwoot.replicaCount }}
+  replicas: {{ int .Values.worker.replica }}
   selector:
     matchLabels:
       {{- include "sidekiq.labels" . | nindent 6 }}
@@ -26,9 +26,9 @@ spec:
             - config/sidekiq.yml
           env:
             {{- include "chatwoot.environ" .  }}
-          image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-workers
           resources: {}
-          imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
 
 status: {}

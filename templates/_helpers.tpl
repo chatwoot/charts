@@ -62,41 +62,24 @@ Create the name of the service account to use
 {{- end }}
 
 
-{{- define "postgres.labels" }}
-{{- include "chatwoot.labels" . }}
-component: database
-name: {{ .Values.applicationArch.storage.db.name }}
-version: {{ .Values.applicationArch.storage.db.version | quote }}
-{{- end }}
-
-
-{{- define "redis.labels" }}
-{{- include "chatwoot.labels" . }}
-component: dataStore
-name: {{ .Values.applicationArch.storage.dataStore.name}}
-version: {{ .Values.applicationArch.storage.dataStore.version}}
-{{- end }}
-
-
 {{- define "rails.labels" }}
 {{- include "chatwoot.labels" . }}
 component: rails
-name: {{ .Values.applicationArch.rails.name}}
-version: {{ .Values.applicationArch.rails.version}}
+name: {{ .Values.services.name}}
+version: {{ .Values.image.tag }}
 {{- end }}
 
 {{- define "sidekiq.labels" }}
 {{- include "chatwoot.labels" . }}
 component: rails
-name: {{ .Values.applicationArch.backgroundProc.name}}
-version: {{ .Values.applicationArch.backgroundProc.version}}
+name: sidekiq
 {{- end }}
 
 {{- define "migration-job.labels" }}
 {{- include "chatwoot.labels" . }}
 component: db-migration
 name: db-migration
-version: {{ .Values.applicationArch.rails.version}}
+version: {{ .Values.image.tag}}
 chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 release: "{{ .Release.Name }}"
 {{- end }}

@@ -1,78 +1,23 @@
-# Default values for chatwoot.
+# Default values for chatwoot
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-applicationArch:
-  rails:
-    name: chatwoot
-    version: 1.16.0
-  backgroundProc:
-    name: sidekiq
-    version: 6.0.2
-  storage:
-    db:
-      name: postgres
-      version: 12
-    dataStore:
-      name: redis
-      version: alpine
-      local: true
+image:
+  repository: chatwoot/chatwoot
+  tag: v1.18.1
+  pullPolicy: IfNotPresent
 
-deployment:
-  image:
-    dockerHub:
-      chatwoot:
-        name: chatwoot-base
-        owner: chatwoot
-        repository: chatwoot
-        tag: latest
-        port: 3000
-        restartPolicy: Always
-        replicaCount: 1
-      database:
-        repository: postgres
-        tag: 12
-        port: 5432
-        restartPolicy: Always
-        replicaCount: 1
-      redis:
-        repository: redis
-        tag: alpine
-        port: 6379
-        restartPolicy: Always
-        replicaCount: 1
-    imagePullPolicy: IfNotPresent
-    restartPolicy: OnFailure
+web:
+  replica: 1
+worker:
+  replica: 1
   # Overrides the image tag whose default is the chart appVersion.
 
 services:
-  rails:
-    name: chatwoot
-    port: 3000
-    targetPort: 3000
-    type: LoadBalancer
+  name: chatwoot
+  internlPort: 3000
+  targetPort: 3000
+  type: LoadBalancer
 
-  postgres:
-    name: postgres-5432
-    port: 5432
-    targetPort: 5432
-    type: ""
-
-  redis:
-    name: redis-6379
-    port: 6379
-    targetPort: 6379
-    type: ""
-
-volumes:
-  postgres:
-    accessModes: ReadWriteOnce
-    storage: 1Gi
-    local: true
-
-  redis:
-    accessModes: ReadWriteOnce
-    storage: 1Gi
-    local: true
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

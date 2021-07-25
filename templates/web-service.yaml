@@ -8,10 +8,10 @@ metadata:
 
 spec:
   ports:
-    - name: {{ .Values.services.rails.name | quote}}
-      port: {{ int .Values.services.rails.port }}
-      targetPort: {{ int .Values.services.rails.targetPort }}
-  type: {{ .Values.services.rails.type }}
+    - name: {{ .Values.services.name | quote}}
+      port: {{ int .Values.services.internlPort }}
+      targetPort: {{ int .Values.services.targetPort }}
+  type: {{ .Values.services.type }}
   selector:
     {{- include "rails.labels" . | nindent 4}}
 status:

@@ -23,7 +23,7 @@ spec:
         command: ["sh", "-c", "until nslookup {{ .Values.env.REDIS_HOST }}; do echo waiting for {{ .Values.env.REDIS_HOST  }}; sleep 2; done;"]
       containers:
       - name: "db-migrate-job"
-        image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         args:
         - bundle
         - exec
@@ -31,4 +31,4 @@ spec:
         - db:chatwoot_prepare
         env:
             {{- include "chatwoot.environ" .  }}
-        imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
