@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "rails.labels" . | nindent 4}}
 spec:
-  replicas: {{ int .Values.deployment.image.dockerHub.chatwoot.replicaCount }}
+  replicas: {{ int .Values.web.replica }}
   selector:
     matchLabels:
       {{- include "rails.labels" . | nindent 6 }}
@@ -25,7 +25,7 @@ spec:
             - rails
             - s
             - -p
-            - {{ .Values.deployment.image.dockerHub.chatwoot.port | quote}}
+            - {{ .Values.services.internlPort | quote}}
             - -b
             - 0.0.0.0
             
@@ -33,11 +33,11 @@ spec:
             - docker/entrypoints/rails.sh
           env:
             {{- include "chatwoot.environ" .  }}
-          image: "{{ .Values.deployment.image.dockerHub.chatwoot.owner }}/{{ .Values.deployment.image.dockerHub.chatwoot.repository }}:{{ .Values.deployment.image.dockerHub.chatwoot.tag }}"
+          image: "{{ .Values.image.repository}}:{{ .Values.image.tag}}"
           name: {{ .Chart.Name }}-web
           ports:
-            - containerPort: {{ int .Values.deployment.image.dockerHub.chatwoot.port }}
-          imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
+            - containerPort: {{ int .Values.services.internlPort }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources: {}
 
 status: {}
