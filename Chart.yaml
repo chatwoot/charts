@@ -9,7 +9,7 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     version: 14.7.2
 name: chatwoot
-description: Open-source customer engagement suite, an alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥
+description: Open-source customer engagement suite, an alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥💬
 type: application
 keywords:
   - chatwoot
@@ -27,7 +27,7 @@ maintainers:
     email: sojan@chatwoot.com
 
 #This is the chart version.
-version: 0.4.0
+version: 0.4.1
 
 #This is application version.
-appVersion: "1.16.0"
+appVersion: "1.18.1"
