@@ -149,7 +149,7 @@ env:
   FB_APP_SECRET: ""
   FB_VERIFY_TOKEN: ""
   FORCE_SSL: "false"
-  FRONTEND_URL: "http://0.0.0.0:3000/"
+  FRONTEND_URL: "http://0.0.0.0:3000"
   GCS_PROJECT: ""
   GCS_BUCKET: ""
   GCS_CREDENTIALS: ""
