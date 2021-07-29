@@ -150,6 +150,9 @@ env:
   FB_VERIFY_TOKEN: ""
   FORCE_SSL: "false"
   FRONTEND_URL: "http://0.0.0.0:3000/"
+  GCS_PROJECT: ""
+  GCS_BUCKET: ""
+  GCS_CREDENTIALS: ""
   IOS_APP_ID: 6C953F3RX2.com.chatwoot.app
   LOG_LEVEL: info
   LOG_SIZE: "500"

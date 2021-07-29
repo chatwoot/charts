@@ -57,6 +57,21 @@
                 configMapKeyRef:
                   key: FRONTEND_URL
                   name: env
+            - name: GCS_PROJECT
+              valueFrom:
+                configMapKeyRef:
+                  key: GCS_PROJECT
+                  name: env
+            - name: GCS_BUCKET
+              valueFrom:
+                configMapKeyRef:
+                  key: GCS_BUCKET
+                  name: env
+            - name: GCS_CREDENTIALS
+              valueFrom:
+                configMapKeyRef:
+                  key: GCS_CREDENTIALS
+                  name: env
             - name: IOS_APP_ID
               valueFrom:
                 configMapKeyRef:
