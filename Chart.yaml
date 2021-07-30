@@ -27,7 +27,7 @@ maintainers:
     email: sojan@chatwoot.com
 
 #This is the chart version.
-version: 0.4.1
+version: 0.4.2
 
 #This is application version.
-appVersion: "1.18.1"
+appVersion: "v1.18.1"
