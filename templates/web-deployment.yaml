@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chatwoot.fullname" . }}-web
+  creationTimestamp: null
+  labels:
+    {{- include "rails.labels" . | nindent 4}}
+spec:
+  replicas: {{ int .Values.web.replica }}
+  selector:
+    matchLabels:
+      {{- include "rails.labels" . | nindent 6 }}
+  strategy: {}
+  template:
+    metadata:
+
+      creationTimestamp: null
+      labels:
+        {{- include "rails.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - args: 
+            - bundle
+            - exec
+            - rails
+            - s
+            - -p
+            - {{ .Values.services.internlPort | quote}}
+            - -b
+            - 0.0.0.0
+            
+          command:
+            - docker/entrypoints/rails.sh
+          env:
+            {{- include "chatwoot.environ" .  }}
+          image: "{{ .Values.image.repository}}:{{ .Values.image.tag}}"
+          name: {{ .Chart.Name }}-web
+          ports:
+            - containerPort: {{ int .Values.services.internlPort }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources: {}
+
+status: {}
