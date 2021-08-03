@@ -1,6 +1,7 @@
 # Default values for chatwoot
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+# Overrides the image tag whose default is the chart appVersion.
 image:
   repository: chatwoot/chatwoot
   tag: v1.18.1
@@ -10,7 +11,6 @@ web:
   replica: 1
 worker:
   replica: 1
-  # Overrides the image tag whose default is the chart appVersion.
 
 services:
   name: chatwoot
