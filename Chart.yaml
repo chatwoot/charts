@@ -19,12 +19,16 @@ keywords:
   - ruby
   - rails
   - crm
-
 maintainers:
   - name: vishnu-narayanan
     email: vishnu@chatwoot.com
   - name: sojan-official
     email: sojan@chatwoot.com
+home: https://github.com/chatwoot/charts
+icon: https://chatwoot-public-assets.s3.amazonaws.com/logo/square.png
+sources:
+  - https://github.com/chatwoot/chatwoot
+  - http://www.chatwoot.com
 
 #This is the chart version.
 version: 0.4.2
