@@ -65,7 +65,7 @@ ingress:
           pathType: Prefix
           backend:
             service:
-              name: chatwoot-service
+              name: chatwoot
               port:
                 number: 3000
   tls: []
