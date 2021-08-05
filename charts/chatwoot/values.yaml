@@ -17,6 +17,11 @@ services:
   internlPort: 3000
   targetPort: 3000
   type: LoadBalancer
+  annotations: {}
+    # For example
+    #  service.beta.kubernetes.io/aws-load-balancer-type: external
+    #  service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    #  service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
 
 imagePullSecrets: []
 nameOverride: ""
@@ -60,7 +65,7 @@ ingress:
           pathType: Prefix
           backend:
             service:
-              name: chatwoot-service
+              name: chatwoot
               port:
                 number: 3000
   tls: []
