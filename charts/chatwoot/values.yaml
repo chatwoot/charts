@@ -4,7 +4,7 @@
 # Overrides the image tag whose default is the chart appVersion.
 image:
   repository: chatwoot/chatwoot
-  tag: v1.18.1
+  tag: v1.18.2
   pullPolicy: IfNotPresent
 
 web:
@@ -114,10 +114,12 @@ postgresql:
 redis:
   enabled: true
   nameOverride: chatwoot-redis
+  auth:
+    password: redis
   # The following variables are only used when internal Redis is disabled
   # host: redis
   # Just omit the password field if your redis cluster doesn't use password
-  password: redis
+  # password: redis
   # port: 6379
   # When defined the `password` field is ignored
   # existingSecret: secret-name
@@ -176,7 +178,7 @@ env:
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
   REDIS_HOST: "chatwoot-chatwoot-redis-master"
-  REDIS_URL: redis://redis@chatwoot-chatwoot-redis-master:6379
+  REDIS_URL: redis://:redis@chatwoot-chatwoot-redis-master:6379
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
   SENTRY_DSN: ""
