@@ -30,8 +30,8 @@ sources:
   - https://github.com/chatwoot/chatwoot
   - http://www.chatwoot.com
 
-#This is the chart version.
+# This is the chart version.
 version: 0.5.2
 
-#This is application version.
+# This is the application version.
 appVersion: "v1.18.2"
