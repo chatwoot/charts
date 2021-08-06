@@ -20,6 +20,10 @@ jobs:
         with:
           version: v3.4.0
 
+      - name: Add helm dependencies
+        run: |
+          helm repo add bitnami "https://charts.bitnami.com/bitnami"
+
       - uses: actions/setup-python@v2
         with:
           python-version: 3.7
@@ -44,5 +48,3 @@ jobs:
 
       - name: Run chart-testing (install)
         run: ct install --target-branch main
-
-
