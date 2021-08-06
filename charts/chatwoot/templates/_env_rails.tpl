@@ -249,5 +249,10 @@
                 configMapKeyRef:
                   key: USE_INBOX_AVATAR_FOR_BOT
                   name: env
+            - name: CHATWOOT_INSTALLATION_ENV
+              valueFrom:
+                configMapKeyRef:
+                  key: CHATWOOT_INSTALLATION_ENV
+                  name: env
 
 {{- end }}
