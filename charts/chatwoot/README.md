@@ -52,67 +52,91 @@ The command removes all the Kubernetes components associated with the chart and 
 | `image.tag`         | Chatwoot image tag (immutable tags are recommended) | `v18.1.1`              |
 | `image.pullPolicy`  | Chatwoot image pull policy                          | `IfNotPresent`         |
 
-
+ 
 ### Chatwoot Environment Variables
 
-| Name                              | Description                                          | Value                                              |
-| --------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
-| env.ACTIVE_STORAGE_SERVICE        | string                                               | `"local"`                                          |
-| env.ASSET_CDN_HOST                | string                                               | `""`                                               |
-| env.AWS_ACCESS_KEY_ID             | string                                               | `""`                                               |
-| env.AWS_ENDPOINT_URL              | string                                               | `""`                                               |  |
-| env.AWS_REGION                    | string                                               | `""`                                               |  |
-| env.AWS_SECRET_ACCESS_KEY         | string                                               | `""`                                               |  |
-| env.CHATWOOT_INSTALLATION_ENV     | string                                               | `"helm"`                                           |  |
-| env.ENABLE_ACCOUNT_SIGNUP         | string                                               | `"false"`                                          |  |
-| env.FB_APP_ID                     | string                                               | `""`                                               |  |
-| env.FB_APP_SECRET                 | string                                               | `""`                                               |  |
-| env.FB_VERIFY_TOKEN               | string                                               | `""`                                               |  |
-| env.FORCE_SSL                     | string                                               | `"false"`                                          |  |
-| env.FRONTEND_URL                  | string                                               | `"http://0.0.0.0:3000/"` |  |
-| env.IOS_APP_ID                    | string                                               | `"6C953F3RX2.com.chatwoot.app"` |  |
-| env.LOG_LEVEL                     | string                                               | `"info"` |  |
-| env.LOG_SIZE                      | string                                               | `"500"` |  |
-| env.MAILER_INBOUND_EMAIL_DOMAIN   | string                                               | `""` |  |
-| env.MAILER_SENDER_EMAIL           | string                                               | `""` |  |
-| env.MAILGUN_INGRESS_SIGNING_KEY   | string                                               | `""` |  |
-| env.MANDRILL_INGRESS_API_KEY      | string                                               | `""` |  |
-| env.POSTGRES_DB                   | string                                               | `"chatwoot_production"` |  |
-| env.POSTGRES_HOST                 | string                                               | `"chatwoot-chatwoot-postgresql"` |  |
-| env.POSTGRES_PASSWORD             | string                                               | `"postgres"` |  |
-| env.POSTGRES_PORT                 | int                                                  | `5432` |  |
-| env.POSTGRES_USERNAME             | string                                               | `"postgres"` |  |
-| env.RAILS_ENV                     | string                                               | `"production"` |  |
-| env.RAILS_INBOUND_EMAIL_PASSWORD  | string                                               | `""` |  |
-| env.RAILS_INBOUND_EMAIL_SERVICE   | string                                               | `""` |  |
-| env.RAILS_LOG_TO_STDOUT           | string                                               | `"true"` |  |
-| env.RAILS_MAX_THREADS             | string                                               | `"5"` |  |
-| env.REDIS_HOST                    | string                                               | `"chatwoot-chatwoot-redis-master"` |  |
-| env.REDIS_PASSWORD                | string                                               | `"redis"` |  |
-| env.REDIS_SENTINELS               | string                                               | `""` |  |
-| env.REDIS_SENTINEL_MASTER_NAME    | string                                               | `""` |  |
-| env.REDIS_URL                     | string                                               | `"redis://:redis@chatwoot-chatwoot-redis-master:6379"` |  |
-| env.S3_BUCKET_NAME                | string                                               | `""` |  |
-| env.SECRET_KEY_BASE               | string                                               | `"wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb"` |  |
-| env.SENTRY_DSN                    | string                                               | `""` |  |
-| env.SLACK_CLIENT_ID               | string                                               | `""` |  |
-| env.SLACK_CLIENT_SECRET           | string                                               | `""` |  |
-| env.SMTP_ADDRESS                  | string                                               | `""` |  |
-| env.SMTP_AUTHENTICATION           | string                                               | `"plain"` |  |
-| env.SMTP_ENABLE_STARTTLS_AUTO     | string                                               | `"true"` |  |
-| env.SMTP_OPENSSL_VERIFY_MODE      | string                                               | `"no     ne"` |  |
-| env.SMTP_PASSWORD                 | string                                               | `""` |  |
-| env.SMTP_PORT                     | string                                               | `"587"` |  |
-| env.SMTP_USERNAME                 | string                                               | `""` |  |
-| env.TWITTER_APP_ID                | string                                               | `""` |  |
-| env.TWITTER_CONSUMER_KEY          | string                                               | `""` |  |
-| env.TWITTER_CONSUMER_SECRET       | string                                               | `""` |  |
-| env.TWITTER_ENVIRONMENT           | string                                               | `""` |  |
-| env.USE_INBOX_AVATAR_FOR_BOT      | string                                               | `"true"` |  |
+| Name                                | Type                                                                | Default Value                                              |
+| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `env.ACTIVE_STORAGE_SERVICE`        | Storage service. `local` for disk. `amazon` for s3.                 | `"local"`                                                  |
+| `env.ASSET_CDN_HOST`                | Set if CDN is used for asset delivery.                              | `""`                                                       |
+| `env.CHATWOOT_INSTALLATION_ENV`     | Sets chatwoot installation method.                                  | `"helm"`                                                   |
+| `env.ENABLE_ACCOUNT_SIGNUP`         |  `true` : default option, allows sign ups, `false` : disables all the end points related to sign ups, `api_only`: disables the UI for signup but you can create sign ups via the account apis.  | `"false"`                                                  |
+| `env.FORCE_SSL`                     | Force all access to the app over SSL, default is set to false.                  | `"false"`                                                  |
+| `env.FRONTEND_URL`                  | Replace with the URL you are planning to use for your app.                      | `"http://0.0.0.0:3000/"`                                   |
+| `env.IOS_APP_ID`                    | Change this variable only if you are using a custom build for mobile app.       | `"6C953F3RX2.com.chatwoot.app"`                            |
+| `env.ANDROID_BUNDLE_ID`             | Change this variable only if you are using a custom build for mobile app.       | `"com.chatwoot.app"`                                       |
+| `env.MAILER_SENDER_EMAIL`           | The email from which all outgoing emails are sent.                              | `""`                                                       |
+| `env.RAILS_ENV`                     | Sets rails environment.                                                         | `"production"`                                             |
+| `env.RAILS_MAX_THREADS`             | Number of threads each worker will use.                                         | `"5"`                                                      |
+| `env.SECRET_KEY_BASE`               | Used to verify the integrity of signed cookies. Ensure a secure value is set.   | `"wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb"`     |
+| `env.SENTRY_DSN`                    | Sentry data source name.                                                        | `""`                                                       |
+| `env.SMTP_ADDRESS`                  | Set your smtp address.                                                          |`""`                                                        |
+| `env.SMTP_AUTHENTICATION`           | Allowed values: `plain`,`login`,`cram_md5`                                      | `"plain"`                                                  |
+| `env.SMTP_ENABLE_STARTTLS_AUTO`     | Defaults to true.                                                               | `"true"`                                                   |
+| `env.SMTP_OPENSSL_VERIFY_MODE`      | Can be: `none`, `peer`, `client_once`, `fail_if_no_peer_cert`                   | `"none"`                                                   |
+| `env.SMTP_PASSWORD`                 | SMTP password                                                                   | `""`                                                       |
+| `env.SMTP_PORT`                     | SMTP port                                                                       | `"587"`                                                    |
+| `env.SMTP_USERNAME`                 | SMTP username                                                                   | `""`                                                       |
+| `env.USE_INBOX_AVATAR_FOR_BOT`      | Bot customizations                                                              | `"true"`                                                   |
                                             
+### Email setup for conversation continuity (Incoming emails)
 
+| Name                                | Type                                                                | Default Value                                              |
+| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `env.MAILER_INBOUND_EMAIL_DOMAIN`   | This is the domain set for the reply emails when conversation continuity is enabled. | `""`                                                       |
+| `env.RAILS_INBOUND_EMAIL_SERVICE`   | Set this to appropriate ingress channel with regards to incoming emails. Possible values are `relay`, `mailgun`, `mandrill`, `postmark` and `sendgrid`. | `""`                                                       |
+| `env.RAILS_INBOUND_EMAIL_PASSWORD`  | Password for the email service.                                     | `""`                                                       |
+| `env.MAILGUN_INGRESS_SIGNING_KEY`   | Set if using mailgun for incoming conversations.                    | `""`                                                       |
+| `env.MANDRILL_INGRESS_API_KEY`      | Set if using mandrill for incoming conversations.                   | `""`                                                       |
 
-## Values
+### Postgres variables
+
+| Name                                | Type                                                                | Default Value                                              |
+| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `postgresql.enabled`                | Set to `false` if using external postgres and modify the below variables.     | `true`                                           |
+| `env.POSTGRES_DB`                   | Chatwoot database name                                                        | `"chatwoot_production"`                          |
+| `env.POSTGRES_HOST`                 | Database url. Edit if using external postgres.                                | `"chatwoot-chatwoot-postgresql"`                 |
+| `env.POSTGRES_PASSWORD`             | Database password. Edit if using external postgres.                           | `"postgres"`                                     |
+| `env.POSTGRES_PORT`                 | Database port                                                                 | `5432`                                           |
+| `env.POSTGRES_USERNAME`             | Database username.                                                            | `"postgres"`                                     |
+
+### Redis variables
+
+| Name                                | Type                                                                | Default Value                                              |
+| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.   | `true`                                                        |
+| `env.REDIS_HOST`                    | Redis host name                                                            | `"chatwoot-chatwoot-redis-master"`                         |
+| `env.REDIS_PASSWORD`                | Redis password                                                             | `"redis"`                                                  |
+| `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports. For example, `sentinel_host1:port1`, `sentinel_host2:port2`    | `""`  |
+| `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel. | `""`                                                       |
+| `env.REDIS_URL`                     | REDIS url                                                      | `"redis://:redis@chatwoot-chatwoot-redis-master:6379"`     |
+### Logging variable
+
+| Name                                | Type                                                                | Default Value                                              |
+| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `env.RAILS_LOG_TO_STDOUT`           | string                                                              | `"true"`                                                   |
+| `env.LOG_LEVEL`                     | string                                                              | `"info"`                                                   |
+| `env.LOG_SIZE`                      | string                                                              | `"500"`                                                    |
+### Third party credentials 
+
+| Name                                | Type                                                                 | Default Value                                              |
+| ----------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `env.S3_BUCKET_NAME`                | S3 bucket name                                                       | `""`                                                       |
+| `env.AWS_ACCESS_KEY_ID`             | Amazon access key ID                                                 | `""`                                                       |
+| `env.AWS_ENDPOINT_URL`              | https://www.chatwoot.com/docs/configuring-s3-bucket-as-cloud-storage | `""`                                                       |
+| `env.AWS_REGION`                    | Amazon region                                                        | `""`                                                       |
+| `env.AWS_SECRET_ACCESS_KEY`         | Amazon secret key ID                                                 | `""`                                                       |
+| `env.FB_APP_ID`                     | For facebook channel. https://www.chatwoot.com/docs/facebook-setup   | `""`                                                       |
+| `env.FB_APP_SECRET`                 | For facebook channel                                                 | `""`                                                       |
+| `env.FB_VERIFY_TOKEN`               | For facebook channel                                                 | `""`                                                       |
+| `env.SLACK_CLIENT_ID`               | For slack integration                                                | `""`                                                       |
+| `env.SLACK_CLIENT_SECRET`           | For slack integration                                                | `""`                                                       |
+| `env.TWITTER_APP_ID`                | For twitter channel                                                  | `""`                                                       |
+| `env.TWITTER_CONSUMER_KEY`          | For twitter channel                                                  | `""`                                                       |
+| `env.TWITTER_CONSUMER_SECRET`       | For twitter channel                                                  | `""`                                                       |
+| `env.TWITTER_ENVIRONMENT`           | For twitter channel                                                  | `""`                                                       |
+
+### Other Paramaters
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -127,9 +151,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | hooks.migrate.hookAnnotation | string | `"post-install,post-upgrade"` |  |
 | hooks.migrate.resources.limits.memory | string | `"1000Mi"` |  |
 | hooks.migrate.resources.requests.memory | string | `"1000Mi"` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.repository | string | `"chatwoot/chatwoot"` |  |
-| image.tag | string | `"v1.18.2"` |  |
 | imagePullSecrets | list | `[]` |  |
 | ingress.annotations | object | `{}` |  |
 | ingress.enabled | bool | `false` |  |
@@ -149,7 +170,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | postgresql.postgresqlPassword | string | `"postgres"` |  |
 | postgresql.postgresqlUsername | string | `"postgres"` |  |
 | redis.auth.password | string | `"redis"` |  |
-| redis.enabled | bool | `true` |  |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.nameOverride | string | `"chatwoot-redis"` |  |
 | resources | object | `{}` |  |
@@ -168,8 +188,26 @@ The command removes all the Kubernetes components associated with the chart and 
 | web.replica | int | `1` |  |
 | worker.replica | int | `1` |  |
 
+
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+
+```bash
+$ helm install my-release \
+  --set env.FRONTEND_URL="chat.yourdomain.com"\
+    chatwoot/chatwoot
+```
+
+The above command sets the Chatwoot server frontend url to `chat.yourdoamain.com`.
+
+Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
+
+```bash
+$ helm install my-release -f values.yaml chatwoot/chatwoot
+```
+
 ## Postgres
+PostgreSQL is installed along with the chart if you choose the default setup. To use an external postgres DB, please set `postgresql.enabled` to `false` and set the variables under postgres section above.
 
 ## Redis
 
-## Upgrade
+Redis is installed along with the chart if you choose the default setup. To use an external postgres DB, please set `redis.enabled` to `false` and set the variables under redis section above.
