@@ -1,6 +1,6 @@
  # Chatwoot
 
-Customer engagement suite, an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥💬
+[Chatwoot](https://chatwoot.co) is a customer engagement suite. an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥💬
 
 ## TL;DR
 
@@ -24,7 +24,7 @@ To install the chart with the release name `chatwoot`:
 $ helm install chatwoot chatwoot/chatwoot
 ```
 
-The command deploys Chatwoot on the Kubernetes cluster in the default configuration. The [Parameters](#parameters) section lists the parameters that can be configured during installation.
+The command deploys Chatwoot on the Kubernetes cluster in the default configuration. The [parameters](#parameters) section lists the parameters that can be configured during installation.
 
 > **Tip**: List all releases using `helm list`
 
@@ -204,6 +204,8 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 ```bash
 $ helm install my-release -f values.yaml chatwoot/chatwoot
 ```
+
+> **Tip** You can use the default `values.yaml` file.
 
 ## Postgres
 PostgreSQL is installed along with the chart if you choose the default setup. To use an external postgres DB, please set `postgresql.enabled` to `false` and set the variables under postgres section above.
