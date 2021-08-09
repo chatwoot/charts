@@ -28,7 +28,10 @@ spec:
             {{- include "chatwoot.environ" .  }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-workers
-          resources: {}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
 status: {}
