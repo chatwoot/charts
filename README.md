@@ -10,5 +10,5 @@ helm install chatwoot chatwoot/chatwoot
 ## Configuration
 Check the [README.md](./charts/chatwoot/README.md)
 
-## Questions ? Feedback ?
+## Questions? Feedback?
 [Join our discord server.](https://discord.gg/cJXdrwS)

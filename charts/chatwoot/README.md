@@ -1,6 +1,6 @@
  # Chatwoot
 
-[Chatwoot](https://chatwoot.co) is a customer engagement suite. an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud etc. 🔥💬
+[Chatwoot](https://chatwoot.co) is a customer engagement suite. an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud, etc. 🔥💬
 
 ## TL;DR
 
@@ -9,7 +9,7 @@ helm repo add chatwoot https://chatwoot.github.io/charts
 helm install chatwoot chatwoot/chatwoot
 ```
 
-## Prerequistes
+## Prerequisites
 
 - Kubernetes 1.16+
 - Helm 3.1.0+
@@ -38,7 +38,7 @@ helm delete chatwoot
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
 
-> **Note**: Persistent volumes are not deleted automatically. They need to removed manually.
+> **Note**: Persistent volumes are not deleted automatically. They need to be removed manually.
 
 
 ## Parameters
@@ -110,7 +110,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports. For example, `sentinel_host1:port1`, `sentinel_host2:port2`    | `""`  |
 | `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel. | `""`                                                       |
 | `env.REDIS_URL`                     | REDIS url                                                      | `"redis://:redis@chatwoot-chatwoot-redis-master:6379"`     |
-### Logging variable
+### Logging variables
 
 | Name                                | Type                                                                | Default Value                                              |
 | ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -136,7 +136,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.TWITTER_CONSUMER_SECRET`       | For twitter channel                                                  | `""`                                                       |
 | `env.TWITTER_ENVIRONMENT`           | For twitter channel                                                  | `""`                                                       |
 
-### Other Paramaters
+### Other Parameters
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
@@ -197,7 +197,7 @@ $ helm install my-release \
     chatwoot/chatwoot
 ```
 
-The above command sets the Chatwoot server frontend url to `chat.yourdoamain.com`.
+The above command sets the Chatwoot server frontend URL to `chat.yourdoamain.com`.
 
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
@@ -208,8 +208,8 @@ $ helm install my-release -f values.yaml chatwoot/chatwoot
 > **Tip** You can use the default `values.yaml` file.
 
 ## Postgres
-PostgreSQL is installed along with the chart if you choose the default setup. To use an external postgres DB, please set `postgresql.enabled` to `false` and set the variables under postgres section above.
+PostgreSQL is installed along with the chart if you choose the default setup. To use an external Postgres DB, please set `postgresql.enabled` to `false` and set the variables under the Postgres section above.
 
 ## Redis
 
-Redis is installed along with the chart if you choose the default setup. To use an external postgres DB, please set `redis.enabled` to `false` and set the variables under redis section above.
+Redis is installed along with the chart if you choose the default setup. To use an external Redis DB, please set `redis.enabled` to `false` and set the variables under the Redis section above
