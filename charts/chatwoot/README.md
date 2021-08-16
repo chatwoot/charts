@@ -59,7 +59,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `env.ACTIVE_STORAGE_SERVICE`        | Storage service. `local` for disk. `amazon` for s3.                 | `"local"`                                                  |
 | `env.ASSET_CDN_HOST`                | Set if CDN is used for asset delivery.                              | `""`                                                       |
-| `env.CHATWOOT_INSTALLATION_ENV`     | Sets chatwoot installation method.                                  | `"helm"`                                                   |
+| `env.INSTALLATION_ENV`              | Sets chatwoot installation method.                                  | `"helm"`                                                   |
 | `env.ENABLE_ACCOUNT_SIGNUP`         |  `true` : default option, allows sign ups, `false` : disables all the end points related to sign ups, `api_only`: disables the UI for signup but you can create sign ups via the account apis.  | `"false"`                                                  |
 | `env.FORCE_SSL`                     | Force all access to the app over SSL, default is set to false.                  | `"false"`                                                  |
 | `env.FRONTEND_URL`                  | Replace with the URL you are planning to use for your app.                      | `"http://0.0.0.0:3000/"`                                   |
@@ -91,8 +91,8 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Postgres variables
 
-| Name                                | Type                                                                | Default Value                                              |
-| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| Name                                | Type                                                                          | Default Value                                    |
+| ----------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------ |
 | `postgresql.enabled`                | Set to `false` if using external postgres and modify the below variables.     | `true`                                           |
 | `env.POSTGRES_DB`                   | Chatwoot database name                                                        | `"chatwoot_production"`                          |
 | `env.POSTGRES_HOST`                 | Database url. Edit if using external postgres.                                | `"chatwoot-chatwoot-postgresql"`                 |
@@ -123,10 +123,9 @@ The command removes all the Kubernetes components associated with the chart and 
 | ----------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `env.S3_BUCKET_NAME`                | S3 bucket name                                                       | `""`                                                       |
 | `env.AWS_ACCESS_KEY_ID`             | Amazon access key ID                                                 | `""`                                                       |
-| `env.AWS_ENDPOINT_URL`              | https://www.chatwoot.com/docs/configuring-s3-bucket-as-cloud-storage | `""`                                                       |
 | `env.AWS_REGION`                    | Amazon region                                                        | `""`                                                       |
 | `env.AWS_SECRET_ACCESS_KEY`         | Amazon secret key ID                                                 | `""`                                                       |
-| `env.FB_APP_ID`                     | For facebook channel. https://www.chatwoot.com/docs/facebook-setup   | `""`                                                       |
+| `env.FB_APP_ID`                     | For facebook channel https://www.chatwoot.com/docs/facebook-setup    | `""`                                                       |
 | `env.FB_APP_SECRET`                 | For facebook channel                                                 | `""`                                                       |
 | `env.FB_VERIFY_TOKEN`               | For facebook channel                                                 | `""`                                                       |
 | `env.SLACK_CLIENT_ID`               | For slack integration                                                | `""`                                                       |
