@@ -57,6 +57,11 @@
                 configMapKeyRef:
                   key: FRONTEND_URL
                   name: env
+            - name: INSTALLATION_ENV
+              valueFrom:
+                configMapKeyRef:
+                  key: INSTALLATION_ENV
+                  name: env
             - name: IOS_APP_ID
               valueFrom:
                 configMapKeyRef:
@@ -248,11 +253,6 @@
               valueFrom:
                 configMapKeyRef:
                   key: USE_INBOX_AVATAR_FOR_BOT
-                  name: env
-            - name: CHATWOOT_INSTALLATION_ENV
-              valueFrom:
-                configMapKeyRef:
-                  key: CHATWOOT_INSTALLATION_ENV
                   name: env
 
 {{- end }}
