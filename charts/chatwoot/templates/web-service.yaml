@@ -4,7 +4,9 @@ metadata:
   name: {{ template "chatwoot.fullname" . }}
   creationTimestamp: null
   labels:
-    {{- include "rails.labels" . | nindent 4}}
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
   {{- with .Values.services.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
@@ -16,6 +18,7 @@ spec:
       targetPort: {{ int .Values.services.targetPort }}
   type: {{ .Values.services.type }}
   selector:
-    {{- include "rails.labels" . | nindent 4}}
+    app: {{ template "chatwoot.fullname" . }}
+    role: web
 status:
   loadBalancer: {}

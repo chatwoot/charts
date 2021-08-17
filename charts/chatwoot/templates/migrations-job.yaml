@@ -3,7 +3,9 @@ kind: Job
 metadata:
   name: "{{ .Release.Name }}-migrate"
   labels:
-    {{- include "migration-job.labels" . | nindent 4}}
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.

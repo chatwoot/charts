@@ -1,21 +1,27 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: {{ template "chatwoot.fullname" . }}-worker
   creationTimestamp: null
   labels:
-    {{- include "sidekiq.labels" . | nindent 4 }}
-  name: {{ template "chatwoot.fullname" . }}-worker
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
 spec:
   replicas: {{ int .Values.worker.replica }}
   selector:
     matchLabels:
-      {{- include "sidekiq.labels" . | nindent 6 }}
+      app: {{ template "chatwoot.fullname" . }}
+      release: "{{ .Release.Name }}"
+      role: worker
   strategy: {}
   template:
     metadata:
       creationTimestamp: null
       labels:
-        {{- include "sidekiq.labels" . | nindent 8 }}
+        app: {{ template "chatwoot.fullname" . }}
+        release: "{{ .Release.Name }}"
+        role: worker
     spec:
       containers:
         - args:
