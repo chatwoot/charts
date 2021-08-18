@@ -4,13 +4,13 @@
 # Overrides the image tag whose default is the chart appVersion.
 image:
   repository: chatwoot/chatwoot
-  tag: v1.18.2
+  tag: v1.19.0
   pullPolicy: IfNotPresent
 
 web:
   replica: 1
 worker:
-  replica: 1
+  replica: 2
 
 services:
   name: chatwoot
