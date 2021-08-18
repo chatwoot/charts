@@ -214,3 +214,19 @@ PostgreSQL is installed along with the chart if you choose the default setup. To
 ## Redis
 
 Redis is installed along with the chart if you choose the default setup. To use an external Redis DB, please set `redis.enabled` to `false` and set the variables under the Redis section above
+
+
+## Upgrading
+
+
+## From 0.5.x to 0.6.x
+
+Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
+labels used for deployements. Please delete your helm release and recreate. Deleting your helm release will 
+not delete your persistent volumes used for redis and postgres and as such your data should be safe. 
+
+```
+helm delete chatwoot
+helm repo update
+helm install chatwoot chatwoot/chatwoot
+```
