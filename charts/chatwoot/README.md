@@ -110,6 +110,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports. For example, `sentinel_host1:port1`, `sentinel_host2:port2`    | `""`  |
 | `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel. | `""`                                                       |
 | `env.REDIS_URL`                     | REDIS url                                                      | `"redis://:redis@chatwoot-chatwoot-redis-master:6379"`     |
+
 ### Logging variables
 
 | Name                                | Type                                                                | Default Value                                              |
@@ -117,6 +118,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.RAILS_LOG_TO_STDOUT`           | string                                                              | `"true"`                                                   |
 | `env.LOG_LEVEL`                     | string                                                              | `"info"`                                                   |
 | `env.LOG_SIZE`                      | string                                                              | `"500"`                                                    |
+
 ### Third party credentials 
 
 | Name                                | Type                                                                 | Default Value                                              |

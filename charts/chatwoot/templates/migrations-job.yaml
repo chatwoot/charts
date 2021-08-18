@@ -6,6 +6,7 @@ metadata:
     app: {{ template "chatwoot.fullname" . }}
     chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
     release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
