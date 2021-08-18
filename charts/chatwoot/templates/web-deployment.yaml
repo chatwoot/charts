@@ -4,19 +4,25 @@ metadata:
   name: {{ template "chatwoot.fullname" . }}-web
   creationTimestamp: null
   labels:
-    {{- include "rails.labels" . | nindent 4}}
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
 spec:
   replicas: {{ int .Values.web.replica }}
   selector:
     matchLabels:
-      {{- include "rails.labels" . | nindent 6 }}
+      app: {{ template "chatwoot.fullname" . }}
+      release: "{{ .Release.Name }}"
+      role: web
   strategy: {}
   template:
     metadata:
-
       creationTimestamp: null
       labels:
-        {{- include "rails.labels" . | nindent 8 }}
+        app: {{ template "chatwoot.fullname" . }}
+        release: "{{ .Release.Name }}"
+        role: web
     spec:
       containers:
         - args: 
@@ -33,7 +39,7 @@ spec:
             - docker/entrypoints/rails.sh
           env:
             {{- include "chatwoot.environ" .  }}
-          image: "{{ .Values.image.repository}}:{{ .Values.image.tag}}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-web
           ports:
             - containerPort: {{ int .Values.services.internlPort }}

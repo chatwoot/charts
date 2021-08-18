@@ -3,8 +3,10 @@ kind: ConfigMap
 metadata:
   creationTimestamp: null
   labels:
-    {{- include "chatwoot.labels" . | nindent 4 }}
-
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
   name: env
 data:
   {{- range $key, $value := .Values.env}}

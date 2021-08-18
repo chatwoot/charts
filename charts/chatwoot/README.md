@@ -110,6 +110,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports. For example, `sentinel_host1:port1`, `sentinel_host2:port2`    | `""`  |
 | `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel. | `""`                                                       |
 | `env.REDIS_URL`                     | REDIS url                                                      | `"redis://:redis@chatwoot-chatwoot-redis-master:6379"`     |
+
 ### Logging variables
 
 | Name                                | Type                                                                | Default Value                                              |
@@ -117,6 +118,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.RAILS_LOG_TO_STDOUT`           | string                                                              | `"true"`                                                   |
 | `env.LOG_LEVEL`                     | string                                                              | `"info"`                                                   |
 | `env.LOG_SIZE`                      | string                                                              | `"500"`                                                    |
+
 ### Third party credentials 
 
 | Name                                | Type                                                                 | Default Value                                              |
@@ -212,3 +214,19 @@ PostgreSQL is installed along with the chart if you choose the default setup. To
 ## Redis
 
 Redis is installed along with the chart if you choose the default setup. To use an external Redis DB, please set `redis.enabled` to `false` and set the variables under the Redis section above
+
+
+## Upgrading
+
+
+## From 0.5.x to 0.6.x
+
+Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
+labels used for deployements. Please delete your helm release and recreate. Deleting your helm release will 
+not delete your persistent volumes used for redis and postgres and as such your data should be safe. 
+
+```
+helm delete chatwoot
+helm repo update
+helm install chatwoot chatwoot/chatwoot
+```

@@ -60,26 +60,3 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
-
-
-{{- define "rails.labels" }}
-{{- include "chatwoot.labels" . }}
-component: rails
-name: {{ .Values.services.name}}
-version: {{ .Values.image.tag }}
-{{- end }}
-
-{{- define "sidekiq.labels" }}
-{{- include "chatwoot.labels" . }}
-component: rails
-name: sidekiq
-{{- end }}
-
-{{- define "migration-job.labels" }}
-{{- include "chatwoot.labels" . }}
-component: db-migration
-name: db-migration
-version: {{ .Values.image.tag}}
-chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-release: "{{ .Release.Name }}"
-{{- end }}
