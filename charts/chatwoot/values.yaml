@@ -164,21 +164,14 @@ env:
   MAILER_SENDER_EMAIL: ""
   MAILGUN_INGRESS_SIGNING_KEY: ""
   MANDRILL_INGRESS_API_KEY: ""
-  POSTGRES_HOST: chatwoot-chatwoot-postgresql
-  POSTGRES_PORT: 5432
-  POSTGRES_PASSWORD: "postgres"
-  POSTGRES_USERNAME: "postgres"
-  POSTGRES_DB: chatwoot_production
   RAILS_ENV: production
   RAILS_INBOUND_EMAIL_PASSWORD: ""
   RAILS_INBOUND_EMAIL_SERVICE: ""
   RAILS_LOG_TO_STDOUT: "true"
   RAILS_MAX_THREADS: "5"
-  REDIS_PASSWORD: "redis"
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
-  REDIS_HOST: "chatwoot-chatwoot-redis-master"
-  REDIS_URL: redis://:redis@chatwoot-chatwoot-redis-master:6379
+  REDIS_URL: ""
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
   SENTRY_DSN: ""

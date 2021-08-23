@@ -32,6 +32,7 @@ spec:
         - exec
         - rails
         - db:chatwoot_prepare
-        env:
-            {{- include "chatwoot.environ" .  }}
+        envFrom:
+          - configMapRef:
+              {{ template "chatwoot.fullname" . }}-env
         imagePullPolicy: {{ .Values.image.pullPolicy }}
