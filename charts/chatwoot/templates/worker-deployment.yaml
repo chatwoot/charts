@@ -33,7 +33,7 @@ spec:
             - config/sidekiq.yml
           envFrom:
             - configMapRef:
-                {{ template "chatwoot.fullname" . }}-env
+                name: {{ template "chatwoot.fullname" . }}-env
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-workers
           {{- with .Values.resources }}

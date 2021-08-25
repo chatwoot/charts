@@ -34,5 +34,5 @@ spec:
         - db:chatwoot_prepare
         envFrom:
           - configMapRef:
-              {{ template "chatwoot.fullname" . }}-env
+              name: {{ template "chatwoot.fullname" . }}-env
         imagePullPolicy: {{ .Values.image.pullPolicy }}
