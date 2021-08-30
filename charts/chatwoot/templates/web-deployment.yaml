@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chatwoot.fullname" . }}-web
+  creationTimestamp: null
+  labels:
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ int .Values.web.replica }}
+  selector:
+    matchLabels:
+      app: {{ template "chatwoot.fullname" . }}
+      release: "{{ .Release.Name }}"
+      role: web
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ template "chatwoot.fullname" . }}
+        release: "{{ .Release.Name }}"
+        role: web
+    spec:
+      containers:
+        - args: 
+            - bundle
+            - exec
+            - rails
+            - s
+            - -p
+            - {{ .Values.services.internlPort | quote}}
+            - -b
+            - 0.0.0.0
+          command:
+            - docker/entrypoints/rails.sh
+          envFrom:
+            - configMapRef:
+                name: {{ template "chatwoot.fullname" . }}-env
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: {{ .Chart.Name }}-web
+          ports:
+            - containerPort: {{ int .Values.services.internlPort }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+status: {}
