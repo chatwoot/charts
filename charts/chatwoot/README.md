@@ -81,13 +81,13 @@ The command removes all the Kubernetes components associated with the chart and 
                                             
 ### Email setup for conversation continuity (Incoming emails)
 
-| Name                                | Type                                                                | Default Value                                              |
-| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `env.MAILER_INBOUND_EMAIL_DOMAIN`   | This is the domain set for the reply emails when conversation continuity is enabled. | `""`                                                       |
-| `env.RAILS_INBOUND_EMAIL_SERVICE`   | Set this to appropriate ingress channel with regards to incoming emails. Possible values are `relay`, `mailgun`, `mandrill`, `postmark` and `sendgrid`. | `""`                                                       |
-| `env.RAILS_INBOUND_EMAIL_PASSWORD`  | Password for the email service.                                     | `""`                                                       |
-| `env.MAILGUN_INGRESS_SIGNING_KEY`   | Set if using mailgun for incoming conversations.                    | `""`                                                       |
-| `env.MANDRILL_INGRESS_API_KEY`      | Set if using mandrill for incoming conversations.                   | `""`                                                       |
+| Name                                | Type                                                                                                                                                    | Default Value |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `env.MAILER_INBOUND_EMAIL_DOMAIN`   | This is the domain set for the reply emails when conversation continuity is enabled.                                                                    | `""`          |
+| `env.RAILS_INBOUND_EMAIL_SERVICE`   | Set this to appropriate ingress channel with regards to incoming emails. Possible values are `relay`, `mailgun`, `mandrill`, `postmark` and `sendgrid`. | `""`          |
+| `env.RAILS_INBOUND_EMAIL_PASSWORD`  | Password for the email service.                                                                                                                         | `""`          |
+| `env.MAILGUN_INGRESS_SIGNING_KEY`   | Set if using mailgun for incoming conversations.                                                                                                        | `""`          |
+| `env.MANDRILL_INGRESS_API_KEY`      | Set if using mandrill for incoming conversations.                                                                                                       | `""`          |
 
 ### Postgres variables
 
