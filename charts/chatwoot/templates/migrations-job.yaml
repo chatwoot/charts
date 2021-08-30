@@ -20,7 +20,7 @@ spec:
       initContainers:
       - name: init-wait
         image: busybox:1.28
-        command: ["sh", "-c",  "sleep 120"]    
+        command: ["sh", "-c",  "sleep 20"]    
       - name: init-postgres
         image: busybox:1.28
         command: ["sh", "-c",  "until nslookup {{ template "chatwoot.postgresql.host" . }} ; do echo waiting for {{ template "chatwoot.postgresql.host" . }}; sleep 2; done;"]
