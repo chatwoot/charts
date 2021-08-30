@@ -1,0 +1,8 @@
+web:
+  replica: 1
+worker:
+  replica: 1
+
+redis:
+  replica:
+    replicaCount: 1
