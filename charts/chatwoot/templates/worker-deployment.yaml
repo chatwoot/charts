@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "chatwoot.fullname" . }}-worker
+  creationTimestamp: null
+  labels:
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  replicas: {{ int .Values.worker.replica }}
+  selector:
+    matchLabels:
+      app: {{ template "chatwoot.fullname" . }}
+      release: "{{ .Release.Name }}"
+      role: worker
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: {{ template "chatwoot.fullname" . }}
+        release: "{{ .Release.Name }}"
+        role: worker
+    spec:
+      containers:
+        - args:
+            - bundle
+            - exec
+            - sidekiq
+            - -C
+            - config/sidekiq.yml
+          envFrom:
+            - configMapRef:
+                name: {{ template "chatwoot.fullname" . }}-env
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          name: {{ .Chart.Name }}-workers
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+status: {}
+
