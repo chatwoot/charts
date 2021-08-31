@@ -182,7 +182,9 @@ Set redis URL
 {{- define "chatwoot.redis.url" -}}
 {{- if .Values.redis.enabled -}}
     "redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }}:{{ template "chatwoot.redis.port" . }}"
+{{- else if .Values.env.REDIS_TLS -}}
+    "rediss://:{{ .Values.redis.password }}@{{ .Values.redis.host }}:{{ .Values.redis.port }}"
 {{- else -}}
-{{- default "" .Values.env.REDIS_URL | quote -}}
+    "redis://:{{ .Values.redis.password }}@{{ .Values.redis.host }}:{{ .Values.redis.port }}"
 {{- end -}}
 {{- end -}}

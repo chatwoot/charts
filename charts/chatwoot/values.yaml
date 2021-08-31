@@ -171,6 +171,7 @@ env:
   RAILS_MAX_THREADS: "5"
   REDIS_SENTINEL_MASTER_NAME: ""
   REDIS_SENTINELS: ""
+  REDIS_TLS: false
   S3_BUCKET_NAME: ""
   SECRET_KEY_BASE: wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb
   SENTRY_DSN: ""
