@@ -10,7 +10,7 @@ image:
 web:
   replica: 1
 worker:
-  replica: 2
+  replica: 1
 
 services:
   name: chatwoot
@@ -112,6 +112,8 @@ postgresql:
   # existingSecretKey: postgresql-password
 
 redis:
+  replica:
+    replicaCount: 1
   enabled: true
   nameOverride: chatwoot-redis
   auth:
