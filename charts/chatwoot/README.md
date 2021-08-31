@@ -94,22 +94,25 @@ The command removes all the Kubernetes components associated with the chart and 
 | Name                                | Type                                                                          | Default Value                                    |
 | ----------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------ |
 | `postgresql.enabled`                | Set to `false` if using external postgres and modify the below variables.     | `true`                                           |
-| `postgresql.postgresqlDatabase`     | Chatwoot database name                                                        | `"chatwoot_production"`                          |
-| `postgresql.postgresqlHost`         | Database url. Edit if using external postgres.                                | `"chatwoot-chatwoot-postgresql"`                 |
-| `postgresql.postgresqlPassword`     | Database password. Edit if using external postgres.                           | `"postgres"`                                     |
-| `postgresql.postgresqlPort`         | Database port                                                                 | `5432`                                           |
-| `postgresql.postgresqlUsername`     | Database username.                                                            | `"postgres"`                                     |
+| `postgresql.postgresqlDatabase`     | Chatwoot database name                                                        | `chatwoot_production`                            |
+| `postgresql.postgresqlHost`         | Postgres host. Edit if using external postgres.                               | `""`                                             |
+| `postgresql.postgresqlPassword`     | Postgres password. Edit if using external postgres.                           | `postgres`                                       |
+| `postgresql.postgresqlPort`         | Postgres port                                                                 | `5432`                                           |
+| `postgresql.postgresqlUsername`     | Postgres username.                                                            | `postgres`                                       |
 
 ### Redis variables
 
-| Name                                | Type                                                                | Default Value                                              |
-| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.   | `true`                                                        |
-| `env.REDIS_HOST`                    | Redis host name                                                            | `"chatwoot-chatwoot-redis-master"`                         |
-| `env.REDIS_PASSWORD`                | Redis password                                                             | `"redis"`                                                  |
-| `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports. For example, `sentinel_host1:port1`, `sentinel_host2:port2`    | `""`  |
-| `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel. | `""`                                                       |
-| `env.REDIS_URL`                     | REDIS url                                                      | `"redis://:redis@chatwoot-chatwoot-redis-master:6379"`     |
+| Name                                | Type                                                                       | Default Value                                       |
+| ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
+| `redis.auth.password`               | Password used for internal redis cluster                                   | `redis`                                             |
+| `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.     | `true`                                              |
+| `redis.host`                        | Redis host name                                                            | `""`                                                |
+| `redis.port`                        | Redis port                                                                 | `""`                                                |
+| `redis.password`                    | Redis password                                                             | `""`                                                |
+| `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
+| `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports.     | `""`                                                |
+| `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel.                | `""`                                                |
+
 
 ### Logging variables
 
@@ -165,12 +168,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql.enabled | bool | `true` |  |
-| postgresql.nameOverride | string | `"chatwoot-postgresql"` |  |
-| postgresql.postgresqlDatabase | string | `"chatwoot_production"` |  |
-| postgresql.postgresqlPassword | string | `"postgres"` |  |
-| postgresql.postgresqlUsername | string | `"postgres"` |  |
-| redis.auth.password | string | `"redis"` |  |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.nameOverride | string | `"chatwoot-redis"` |  |
 | resources | object | `{}` |  |
@@ -209,17 +206,18 @@ $ helm install my-release -f values.yaml chatwoot/chatwoot
 > **Tip** You can use the default `values.yaml` file.
 
 ## Postgres
+
 PostgreSQL is installed along with the chart if you choose the default setup. To use an external Postgres DB, please set `postgresql.enabled` to `false` and set the variables under the Postgres section above.
 
 ## Redis
 
-Redis is installed along with the chart if you choose the default setup. To use an external Redis DB, please set `redis.enabled` to `false` and set the variables under the Redis section above
+Redis is installed along with the chart if you choose the default setup. To use an external Redis DB, please set `redis.enabled` to `false` and set the variables under the Redis section above.
 
 
 ## Upgrading
 
 
-## From 0.5.x to 0.6.x
+## To 0.6.x
 
 Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
 labels used for deployements. Please delete your helm release and recreate. Deleting your helm release will 
