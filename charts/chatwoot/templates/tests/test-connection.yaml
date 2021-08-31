@@ -3,13 +3,18 @@ kind: Pod
 metadata:
   name: "{{ include "chatwoot.fullname" . }}-test-connection"
   labels:
-    {{- include "chatwoot.labels" . | nindent 4 }}
+    app: {{ template "chatwoot.fullname" . }}
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
   annotations:
     "helm.sh/hook": test
+    "helm.sh/hook-delete-policy": hook-succeeded  
 spec:
   containers:
     - name: wget
       image: busybox
+      imagePullPolicy: IfNotPresent
       command: ['wget']
-      args: ['{{ include "chatwoot.fullname" . }}:{{ .Values.service.port }}']
+      args: ['{{ include "chatwoot.fullname" . }}:{{ .Values.services.targetPort }}']
   restartPolicy: Never

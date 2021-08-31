@@ -20,10 +20,10 @@ spec:
       initContainers:
       - name: init-postgres
         image: busybox:1.28
-        command: ["sh", "-c",  "until nslookup {{ .Values.env.POSTGRES_HOST }}; do echo waiting for {{ .Values.env.POSTGRES_HOST  }}; sleep 2; done;"]
+        command: ["sh", "-c",  "until nslookup {{ template "chatwoot.postgresql.host" . }} ; do echo waiting for {{ template "chatwoot.postgresql.host" . }}; sleep 2; done;"]
       - name: init-redis
         image: busybox:1.28
-        command: ["sh", "-c", "until nslookup {{ .Values.env.REDIS_HOST }}; do echo waiting for {{ .Values.env.REDIS_HOST  }}; sleep 2; done;"]
+        command: ["sh", "-c", "until nslookup {{ template "chatwoot.redis.host" . }} ; do echo waiting for {{ template "chatwoot.redis.host" . }} ; sleep 2; done;"]
       containers:
       - name: "db-migrate-job"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -32,6 +32,7 @@ spec:
         - exec
         - rails
         - db:chatwoot_prepare
-        env:
-            {{- include "chatwoot.environ" .  }}
+        envFrom:
+          - configMapRef:
+              name: {{ template "chatwoot.fullname" . }}-env
         imagePullPolicy: {{ .Values.image.pullPolicy }}

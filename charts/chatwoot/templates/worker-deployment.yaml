@@ -31,8 +31,9 @@ spec:
             - sidekiq
             - -C
             - config/sidekiq.yml
-          env:
-            {{- include "chatwoot.environ" .  }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "chatwoot.fullname" . }}-env
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-workers
           {{- with .Values.resources }}
@@ -42,3 +43,4 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
 status: {}
+

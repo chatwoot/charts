@@ -34,11 +34,11 @@ spec:
             - {{ .Values.services.internlPort | quote}}
             - -b
             - 0.0.0.0
-            
           command:
             - docker/entrypoints/rails.sh
-          env:
-            {{- include "chatwoot.environ" .  }}
+          envFrom:
+            - configMapRef:
+                name: {{ template "chatwoot.fullname" . }}-env
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-web
           ports:

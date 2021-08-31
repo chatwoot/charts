@@ -60,7 +60,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.ACTIVE_STORAGE_SERVICE`        | Storage service. `local` for disk. `amazon` for s3.                 | `"local"`                                                  |
 | `env.ASSET_CDN_HOST`                | Set if CDN is used for asset delivery.                              | `""`                                                       |
 | `env.INSTALLATION_ENV`              | Sets chatwoot installation method.                                  | `"helm"`                                                   |
-| `env.ENABLE_ACCOUNT_SIGNUP`         |  `true` : default option, allows sign ups, `false` : disables all the end points related to sign ups, `api_only`: disables the UI for signup but you can create sign ups via the account apis.  | `"false"`                                                  |
+| `env.ENABLE_ACCOUNT_SIGNUP`         | `true` : default option, allows sign ups, `false` : disables all the end points related to sign ups, `api_only`: disables the UI for signup but you can create sign ups via the account apis.  | `"false"`                                                  |
 | `env.FORCE_SSL`                     | Force all access to the app over SSL, default is set to false.                  | `"false"`                                                  |
 | `env.FRONTEND_URL`                  | Replace with the URL you are planning to use for your app.                      | `"http://0.0.0.0:3000/"`                                   |
 | `env.IOS_APP_ID`                    | Change this variable only if you are using a custom build for mobile app.       | `"6C953F3RX2.com.chatwoot.app"`                            |
@@ -81,35 +81,38 @@ The command removes all the Kubernetes components associated with the chart and 
                                             
 ### Email setup for conversation continuity (Incoming emails)
 
-| Name                                | Type                                                                | Default Value                                              |
-| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `env.MAILER_INBOUND_EMAIL_DOMAIN`   | This is the domain set for the reply emails when conversation continuity is enabled. | `""`                                                       |
-| `env.RAILS_INBOUND_EMAIL_SERVICE`   | Set this to appropriate ingress channel with regards to incoming emails. Possible values are `relay`, `mailgun`, `mandrill`, `postmark` and `sendgrid`. | `""`                                                       |
-| `env.RAILS_INBOUND_EMAIL_PASSWORD`  | Password for the email service.                                     | `""`                                                       |
-| `env.MAILGUN_INGRESS_SIGNING_KEY`   | Set if using mailgun for incoming conversations.                    | `""`                                                       |
-| `env.MANDRILL_INGRESS_API_KEY`      | Set if using mandrill for incoming conversations.                   | `""`                                                       |
+| Name                                | Type                                                                                                                                                    | Default Value |
+| ----------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------- |
+| `env.MAILER_INBOUND_EMAIL_DOMAIN`   | This is the domain set for the reply emails when conversation continuity is enabled.                                                                    | `""`          |
+| `env.RAILS_INBOUND_EMAIL_SERVICE`   | Set this to appropriate ingress channel with regards to incoming emails. Possible values are `relay`, `mailgun`, `mandrill`, `postmark` and `sendgrid`. | `""`          |
+| `env.RAILS_INBOUND_EMAIL_PASSWORD`  | Password for the email service.                                                                                                                         | `""`          |
+| `env.MAILGUN_INGRESS_SIGNING_KEY`   | Set if using mailgun for incoming conversations.                                                                                                        | `""`          |
+| `env.MANDRILL_INGRESS_API_KEY`      | Set if using mandrill for incoming conversations.                                                                                                       | `""`          |
 
 ### Postgres variables
 
 | Name                                | Type                                                                          | Default Value                                    |
 | ----------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------ |
 | `postgresql.enabled`                | Set to `false` if using external postgres and modify the below variables.     | `true`                                           |
-| `env.POSTGRES_DB`                   | Chatwoot database name                                                        | `"chatwoot_production"`                          |
-| `env.POSTGRES_HOST`                 | Database url. Edit if using external postgres.                                | `"chatwoot-chatwoot-postgresql"`                 |
-| `env.POSTGRES_PASSWORD`             | Database password. Edit if using external postgres.                           | `"postgres"`                                     |
-| `env.POSTGRES_PORT`                 | Database port                                                                 | `5432`                                           |
-| `env.POSTGRES_USERNAME`             | Database username.                                                            | `"postgres"`                                     |
+| `postgresql.postgresqlDatabase`     | Chatwoot database name                                                        | `chatwoot_production`                            |
+| `postgresql.postgresqlHost`         | Postgres host. Edit if using external postgres.                               | `""`                                             |
+| `postgresql.postgresqlPassword`     | Postgres password. Edit if using external postgres.                           | `postgres`                                       |
+| `postgresql.postgresqlPort`         | Postgres port                                                                 | `5432`                                           |
+| `postgresql.postgresqlUsername`     | Postgres username.                                                            | `postgres`                                       |
 
 ### Redis variables
 
-| Name                                | Type                                                                | Default Value                                              |
-| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.   | `true`                                                        |
-| `env.REDIS_HOST`                    | Redis host name                                                            | `"chatwoot-chatwoot-redis-master"`                         |
-| `env.REDIS_PASSWORD`                | Redis password                                                             | `"redis"`                                                  |
-| `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports. For example, `sentinel_host1:port1`, `sentinel_host2:port2`    | `""`  |
-| `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel. | `""`                                                       |
-| `env.REDIS_URL`                     | REDIS url                                                      | `"redis://:redis@chatwoot-chatwoot-redis-master:6379"`     |
+| Name                                | Type                                                                       | Default Value                                       |
+| ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
+| `redis.auth.password`               | Password used for internal redis cluster                                   | `redis`                                             |
+| `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.     | `true`                                              |
+| `redis.host`                        | Redis host name                                                            | `""`                                                |
+| `redis.port`                        | Redis port                                                                 | `""`                                                |
+| `redis.password`                    | Redis password                                                             | `""`                                                |
+| `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
+| `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports.     | `""`                                                |
+| `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel.                | `""`                                                |
+
 
 ### Logging variables
 
@@ -165,12 +168,6 @@ The command removes all the Kubernetes components associated with the chart and 
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
-| postgresql.enabled | bool | `true` |  |
-| postgresql.nameOverride | string | `"chatwoot-postgresql"` |  |
-| postgresql.postgresqlDatabase | string | `"chatwoot_production"` |  |
-| postgresql.postgresqlPassword | string | `"postgres"` |  |
-| postgresql.postgresqlUsername | string | `"postgres"` |  |
-| redis.auth.password | string | `"redis"` |  |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.nameOverride | string | `"chatwoot-redis"` |  |
 | resources | object | `{}` |  |
@@ -209,17 +206,18 @@ $ helm install my-release -f values.yaml chatwoot/chatwoot
 > **Tip** You can use the default `values.yaml` file.
 
 ## Postgres
+
 PostgreSQL is installed along with the chart if you choose the default setup. To use an external Postgres DB, please set `postgresql.enabled` to `false` and set the variables under the Postgres section above.
 
 ## Redis
 
-Redis is installed along with the chart if you choose the default setup. To use an external Redis DB, please set `redis.enabled` to `false` and set the variables under the Redis section above
+Redis is installed along with the chart if you choose the default setup. To use an external Redis DB, please set `redis.enabled` to `false` and set the variables under the Redis section above.
 
 
 ## Upgrading
 
 
-## From 0.5.x to 0.6.x
+## To 0.6.x
 
 Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
 labels used for deployements. Please delete your helm release and recreate. Deleting your helm release will 
