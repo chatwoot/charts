@@ -10,7 +10,7 @@ metadata:
   name: {{ template "chatwoot.fullname" . }}-env
 data:
   POSTGRES_HOST: {{ include "chatwoot.postgresql.host" . | quote }}
-  POSTGRES_PORT: {{ template "chatwoot.postgresql.port" . }}
+  POSTGRES_PORT: {{ include "chatwoot.postgresql.port" . | quote }}
   POSTGRES_USERNAME: {{ default "postgres" .Values.postgresql.postgresqlUsername | quote }}
   POSTGRES_PASSWORD: {{ default "postgres" .Values.postgresql.postgresqlPassword | quote }}
   POSTGRES_DB: {{ default "chatwoot_production" .Values.postgresql.postgresqlDatabase | quote }}

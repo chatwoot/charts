@@ -127,9 +127,9 @@ Set postgres port
 */}}
 {{- define "chatwoot.postgresql.port" -}}
 {{- if .Values.postgresql.enabled -}}
-    "5432"
+    5432
 {{- else -}}
-{{- default "5432" .Values.postgresql.postgresqlPort | quote -}}
+{{- default 5432 .Values.postgresql.postgresqlPort -}}
 {{- end -}}
 {{- end -}}
 
