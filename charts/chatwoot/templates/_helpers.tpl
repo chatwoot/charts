@@ -2,8 +2,8 @@
 Expand the name of the chart.
 */}}
 {{- define "chatwoot.name" -}}
-{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
 
 {{/*
 Create a default fully qualified app name.
@@ -88,6 +88,7 @@ Create the name of the service account to use
 {{- end -}}
 {{- end -}}
 
+
 {{/*
 Set postgres host
 */}}
@@ -95,7 +96,7 @@ Set postgres host
 {{- if .Values.postgresql.enabled -}}
 {{- template "chatwoot.postgresql.fullname" . -}}
 {{- else -}}
-{{- .Values.postgresql.postgresqlHost | quote -}}
+{{- .Values.postgresql.postgresqlHost -}}
 {{- end -}}
 {{- end -}}
 
@@ -139,7 +140,7 @@ Set redis host
 {{- if .Values.redis.enabled -}}
 {{- template "chatwoot.redis.fullname" . -}}-master
 {{- else -}}
-{{- .Values.redis.host | quote -}}
+{{- .Values.redis.host }}
 {{- end -}}
 {{- end -}}
 

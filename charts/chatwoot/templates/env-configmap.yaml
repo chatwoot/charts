@@ -9,15 +9,15 @@ metadata:
     heritage: "{{ .Release.Service }}"
   name: {{ template "chatwoot.fullname" . }}-env
 data:
-  POSTGRES_HOST: "{{ template "chatwoot.postgresql.host" . }}"
+  POSTGRES_HOST: {{ include "chatwoot.postgresql.host" . | quote }}
   POSTGRES_PORT: {{ template "chatwoot.postgresql.port" . }}
   POSTGRES_USERNAME: {{ default "postgres" .Values.postgresql.postgresqlUsername | quote }}
   POSTGRES_PASSWORD: {{ default "postgres" .Values.postgresql.postgresqlPassword | quote }}
   POSTGRES_DB: {{ default "chatwoot_production" .Values.postgresql.postgresqlDatabase | quote }}
-  REDIS_HOST: "{{ template "chatwoot.redis.host" . }}"
-  REDIS_PORT: "{{ template "chatwoot.redis.port" . }}"
+  REDIS_HOST: {{ include "chatwoot.redis.host" . | quote }}
+  REDIS_PORT: {{ include "chatwoot.redis.port" . | quote }}
   REDIS_PASSWORD: {{ default "redis" .Values.redis.auth.password | quote  }}
-  REDIS_URL: {{template "chatwoot.redis.url" . }}
+  REDIS_URL: {{ template "chatwoot.redis.url" . }}
   {{- range $key, $value := .Values.env}}
   {{ $key }}: {{ $value | quote }}
   {{- end }}
