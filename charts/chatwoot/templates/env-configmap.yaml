@@ -13,7 +13,7 @@ data:
   POSTGRES_PORT: {{ include "chatwoot.postgresql.port" . | quote }}
   POSTGRES_USERNAME: {{ default "postgres" .Values.postgresql.postgresqlUsername | quote }}
   POSTGRES_PASSWORD: {{ default "postgres" .Values.postgresql.postgresqlPassword | quote }}
-  POSTGRES_DB: {{ default "chatwoot_production" .Values.postgresql.postgresqlDatabase | quote }}
+  POSTGRES_DATABASE: {{ default "chatwoot_production" .Values.postgresql.postgresqlDatabase | quote }}
   REDIS_HOST: {{ include "chatwoot.redis.host" . | quote }}
   REDIS_PORT: {{ include "chatwoot.redis.port" . | quote }}
   REDIS_PASSWORD: {{ include "chatwoot.redis.password" . }}
