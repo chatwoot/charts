@@ -55,29 +55,30 @@ The command removes all the Kubernetes components associated with the chart and 
  
 ### Chatwoot Environment Variables
 
-| Name                                | Type                                                                | Default Value                                              |
-| ----------------------------------- | ------------------------------------------------------------------- | ---------------------------------------------------------- |
-| `env.ACTIVE_STORAGE_SERVICE`        | Storage service. `local` for disk. `amazon` for s3.                 | `"local"`                                                  |
-| `env.ASSET_CDN_HOST`                | Set if CDN is used for asset delivery.                              | `""`                                                       |
-| `env.INSTALLATION_ENV`              | Sets chatwoot installation method.                                  | `"helm"`                                                   |
-| `env.ENABLE_ACCOUNT_SIGNUP`         | `true` : default option, allows sign ups, `false` : disables all the end points related to sign ups, `api_only`: disables the UI for signup but you can create sign ups via the account apis.  | `"false"`                                                  |
-| `env.FORCE_SSL`                     | Force all access to the app over SSL, default is set to false.                  | `"false"`                                                  |
-| `env.FRONTEND_URL`                  | Replace with the URL you are planning to use for your app.                      | `"http://0.0.0.0:3000/"`                                   |
-| `env.IOS_APP_ID`                    | Change this variable only if you are using a custom build for mobile app.       | `"6C953F3RX2.com.chatwoot.app"`                            |
-| `env.ANDROID_BUNDLE_ID`             | Change this variable only if you are using a custom build for mobile app.       | `"com.chatwoot.app"`                                       |
-| `env.MAILER_SENDER_EMAIL`           | The email from which all outgoing emails are sent.                              | `""`                                                       |
-| `env.RAILS_ENV`                     | Sets rails environment.                                                         | `"production"`                                             |
-| `env.RAILS_MAX_THREADS`             | Number of threads each worker will use.                                         | `"5"`                                                      |
-| `env.SECRET_KEY_BASE`               | Used to verify the integrity of signed cookies. Ensure a secure value is set.   | `"wsedrfghjhygtfrdecfvbhnygtfvbtyftctdrxresxcygvujhb"`     |
-| `env.SENTRY_DSN`                    | Sentry data source name.                                                        | `""`                                                       |
-| `env.SMTP_ADDRESS`                  | Set your smtp address.                                                          |`""`                                                        |
-| `env.SMTP_AUTHENTICATION`           | Allowed values: `plain`,`login`,`cram_md5`                                      | `"plain"`                                                  |
-| `env.SMTP_ENABLE_STARTTLS_AUTO`     | Defaults to true.                                                               | `"true"`                                                   |
-| `env.SMTP_OPENSSL_VERIFY_MODE`      | Can be: `none`, `peer`, `client_once`, `fail_if_no_peer_cert`                   | `"none"`                                                   |
-| `env.SMTP_PASSWORD`                 | SMTP password                                                                   | `""`                                                       |
-| `env.SMTP_PORT`                     | SMTP port                                                                       | `"587"`                                                    |
-| `env.SMTP_USERNAME`                 | SMTP username                                                                   | `""`                                                       |
-| `env.USE_INBOX_AVATAR_FOR_BOT`      | Bot customizations                                                              | `"true"`                                                   |
+| Name                                 | Type                                                                | Default Value                                              |
+| ------------------------------------ | ------------------------------------------------------------------- | ---------------------------------------------------------- |
+| `env.ACTIVE_STORAGE_SERVICE`         | Storage service. `local` for disk. `amazon` for s3.                 | `"local"`                                                  |
+| `env.ASSET_CDN_HOST`                 | Set if CDN is used for asset delivery.                              | `""`                                                       |
+| `env.INSTALLATION_ENV`               | Sets chatwoot installation method.                                  | `"helm"`                                                   |
+| `env.ENABLE_ACCOUNT_SIGNUP`          | `true` : default option, allows sign ups, `false` : disables all the end points related to sign ups, `api_only`: disables the UI for signup but you can create sign ups via the account apis.  | `"false"`                                                  |
+| `env.FORCE_SSL`                      | Force all access to the app over SSL, default is set to false.                  | `"false"`                                                  |
+| `env.FRONTEND_URL`                   | Replace with the URL you are planning to use for your app.                      | `"http://0.0.0.0:3000/"`                                   |
+| `env.IOS_APP_ID`                     | Change this variable only if you are using a custom build for mobile app.       | `"6C953F3RX2.com.chatwoot.app"`                            |
+| `env.ANDROID_BUNDLE_ID`              | Change this variable only if you are using a custom build for mobile app.       | `"com.chatwoot.app"`                                       |
+| `env.ANDROID_SHA256_CERT_FINGERPRINT`| Change this variable only if you are using a custom build for mobile app.       | `"AC:73:8E:DE:EB:5............"`                           |
+| `env.MAILER_SENDER_EMAIL`            | The email from which all outgoing emails are sent.                              | `""`                                                       |
+| `env.RAILS_ENV`                      | Sets rails environment.                                                         | `"production"`                                             |
+| `env.RAILS_MAX_THREADS`              | Number of threads each worker will use.                                         | `"5"`                                                      |
+| `env.SECRET_KEY_BASE`                | Used to verify the integrity of signed cookies. Ensure a secure value is set.   | `replace_with_your_super_duper_secret_key_base`            |
+| `env.SENTRY_DSN`                     | Sentry data source name.                                                        | `""`                                                       |
+| `env.SMTP_ADDRESS`                   | Set your smtp address.                                                          |`""`                                                        |
+| `env.SMTP_AUTHENTICATION`            | Allowed values: `plain`,`login`,`cram_md5`                                      | `"plain"`                                                  |
+| `env.SMTP_ENABLE_STARTTLS_AUTO`      | Defaults to true.                                                               | `"true"`                                                   |
+| `env.SMTP_OPENSSL_VERIFY_MODE`       | Can be: `none`, `peer`, `client_once`, `fail_if_no_peer_cert`                   | `"none"`                                                   |
+| `env.SMTP_PASSWORD`                  | SMTP password                                                                   | `""`                                                       |
+| `env.SMTP_PORT`                      | SMTP port                                                                       | `"587"`                                                    |
+| `env.SMTP_USERNAME`                  | SMTP username                                                                   | `""`                                                       |
+| `env.USE_INBOX_AVATAR_FOR_BOT`       | Bot customizations                                                              | `"true"`                                                   |
                                             
 ### Email setup for conversation continuity (Incoming emails)
 
