@@ -178,6 +178,17 @@ Set redis port
 {{- end -}}
 
 {{/*
+Set redis password
+*/}}
+{{- define "chatwoot.redis.password" -}}
+{{- if .Values.redis.enabled -}}
+{{- default "redis" .Values.redis.auth.password | quote -}}
+{{- else -}}
+{{- default "redis" .Values.redis.password | quote -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Set redis URL
 */}}
 {{- define "chatwoot.redis.url" -}}
