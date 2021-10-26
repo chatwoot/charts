@@ -143,9 +143,20 @@ hooks:
     # Can be overridden to "pre-install,pre-upgrade" with caution to perform migrations that are sometimes required for the deployment to become healthy
     hookAnnotation: "post-install,post-upgrade"
 
+storage:
+  activeService: local
+  bucketName:
+  accessKeyId:
+  secretAccessKey:
+  # this secret should contain both the access key and the
+  # secret access key with the following respective keys:
+  # access-key-id and secret-access-key
+  # existingSecret:
+  region: nyc3
+  endpoint: https://nyc3.digitaloceanspaces.com
+
 # ENVIRONMENT VARIABLES
 env:
-  ACTIVE_STORAGE_SERVICE: local
   ANDROID_BUNDLE_ID: com.chatwoot.app
   ANDROID_SHA256_CERT_FINGERPRINT: "AC:73:8E:DE:EB:56:EA:CC:10:87:02:A7:65:37:7B:38:D4:5D:D4:53:F8:3B:FB:D3:C6:28:64:1D:AA:08:1E:D8"
   ASSET_CDN_HOST: ""

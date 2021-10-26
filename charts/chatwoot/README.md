@@ -49,10 +49,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | Name                | Description                                          | Value                 |
 | ------------------- | ---------------------------------------------------- | --------------------- |
 | `image.repository`  | Chatwoot image repository                           | `chatwoot/chatwoot`    |
-| `image.tag`         | Chatwoot image tag (immutable tags are recommended) | `v18.1.1`              |
+| `image.tag`         | Chatwoot image tag (immutable tags are recommended) | `v1.21.1`              |
 | `image.pullPolicy`  | Chatwoot image pull policy                          | `IfNotPresent`         |
 
- 
+
 ### Chatwoot Environment Variables
 
 | Name                                 | Type                                                                | Default Value                                              |
@@ -79,7 +79,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.SMTP_PORT`                      | SMTP port                                                                       | `"587"`                                                    |
 | `env.SMTP_USERNAME`                  | SMTP username                                                                   | `""`                                                       |
 | `env.USE_INBOX_AVATAR_FOR_BOT`       | Bot customizations                                                              | `"true"`                                                   |
-                                            
+
 ### Email setup for conversation continuity (Incoming emails)
 
 | Name                                | Type                                                                                                                                                    | Default Value |
@@ -123,7 +123,19 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.LOG_LEVEL`                     | string                                                              | `"info"`                                                   |
 | `env.LOG_SIZE`                      | string                                                              | `"500"`                                                    |
 
-### Third party credentials 
+### Storage variables
+
+| Name                        | Type                                                                               | Default Value                         |
+| --------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------- |
+| `storage.activeService`     | Service to use for storage                                                         | "local"                               |
+| `storage.bucketName`        | Name of bucket when using "s3_compatible" service                                  | ""                                    |
+| `storage.accessKeyId`       | Access Key ID to authenticate when using "s3_compatible" service                   | ""                                    |
+| `storage.secretAccessKey`   | Secret Access Key to authenticate when using "s3_compatible" service               | ""                                    |
+| `storage.existingSecret`    | Existing secret with authentication credentials when using "s3_compatible" service | ""                                    |
+| `storage.region`            | Region of S3-compatible service when using "s3_compatible" service                 | "nyc3"                                |
+| `storage.endpoint`          | Endpoint of S3-compatible service when using "s3_compatible" service               | "https://nyc3.digitaloceanspaces.com" |
+
+### Third party credentials
 
 | Name                                | Type                                                                 | Default Value                                              |
 | ----------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -220,9 +232,9 @@ Redis is installed along with the chart if you choose the default setup. To use 
 
 ## To 0.6.x
 
-Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
-labels used for deployements. Please delete your helm release and recreate. Deleting your helm release will 
-not delete your persistent volumes used for redis and postgres and as such your data should be safe. 
+Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector
+labels used for deployements. Please delete your helm release and recreate. Deleting your helm release will
+not delete your persistent volumes used for redis and postgres and as such your data should be safe.
 
 ```
 helm delete chatwoot

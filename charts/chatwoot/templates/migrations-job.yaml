@@ -46,4 +46,33 @@ spec:
         envFrom:
           - configMapRef:
               name: {{ template "chatwoot.fullname" . }}-env
+        env:
+          {{- if .Values.postgresql.existingSecret }}
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.postgresql.existingSecret }}
+                key: {{ .Values.postgresql.existingSecretKey }}
+          {{- end }}
+          {{- if .Values.redis.auth.existingSecret }}
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.redis.auth.existingSecret }}
+                key: {{ .Values.redis.auth.existingSecretKey }}
+          {{- end }}
+          {{- if .Values.storage.existingSecret }}
+          {{- if eq .Values.storage.activeService "s3_compatible" }}
+          - name: STORAGE_ACCESS_KEY_ID
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.storage.existingSecret }}
+                key: access-key-id
+          - name: STORAGE_SECRET_ACCESS_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.storage.existingSecret }}
+                key: secret-access-key
+          {{- end }}
+          {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
