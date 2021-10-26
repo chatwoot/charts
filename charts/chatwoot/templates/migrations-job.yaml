@@ -18,6 +18,11 @@ metadata:
     {{- end }}
 spec:
   template:
+    metadata:
+      annotations:
+      {{- range $key, $value := .Values.jobPodAnnotations }}
+      {{ $key }}: {{ $value | quote }}
+      {{- end }}
     spec:
       restartPolicy: Never
       initContainers:

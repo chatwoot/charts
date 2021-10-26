@@ -40,6 +40,8 @@ podAnnotations: {}
 
 jobAnnotations: {}
 
+jobPodAnnotations: {}
+
 podSecurityContext: {}
   # fsGroup: 2000
 
