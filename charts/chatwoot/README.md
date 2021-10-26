@@ -180,6 +180,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
+| jobAnnotations | object | `{}` |  |
 | podSecurityContext | object | `{}` |  |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.nameOverride | string | `"chatwoot-redis"` |  |

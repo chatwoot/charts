@@ -38,6 +38,8 @@ serviceAccount:
 
 podAnnotations: {}
 
+jobAnnotations: {}
+
 podSecurityContext: {}
   # fsGroup: 2000
 
