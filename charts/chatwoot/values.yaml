@@ -4,7 +4,7 @@
 # Overrides the image tag whose default is the chart appVersion.
 image:
   repository: chatwoot/chatwoot
-  tag: v1.22.1
+  tag: v2.0.0
   pullPolicy: IfNotPresent
 
 web:
