@@ -17,6 +17,13 @@ spec:
   template:
     spec:
       restartPolicy: Never
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
+      {{- end }}
       initContainers:
       - name: init-postgres
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
