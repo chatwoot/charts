@@ -11,6 +11,13 @@ metadata:
     "helm.sh/hook": test
     "helm.sh/hook-delete-policy": hook-succeeded  
 spec:
+  {{- with .Values.tolerations }}
+  tolerations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- if .Values.nodeSelector }}
+  nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 4 }}
+  {{- end }}
   containers:
     - name: wget
       image: busybox
