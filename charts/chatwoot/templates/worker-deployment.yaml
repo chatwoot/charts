@@ -23,6 +23,8 @@ spec:
         app: {{ template "chatwoot.fullname" . }}
         release: "{{ .Release.Name }}"
         role: worker
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/env-secret.yaml") . | sha256sum }}
     spec:
       {{- with .Values.tolerations }}
       tolerations:
