@@ -182,9 +182,9 @@ Set redis password
 */}}
 {{- define "chatwoot.redis.password" -}}
 {{- if .Values.redis.enabled -}}
-{{- default "redis" .Values.redis.auth.password | quote -}}
+{{- default "redis" .Values.redis.auth.password -}}
 {{- else -}}
-{{- default "redis" .Values.redis.password | quote -}}
+{{- default "redis" .Values.redis.password -}}
 {{- end -}}
 {{- end -}}
 
@@ -193,10 +193,10 @@ Set redis URL
 */}}
 {{- define "chatwoot.redis.url" -}}
 {{- if .Values.redis.enabled -}}
-    "redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }}:{{ template "chatwoot.redis.port" . }}"
+    redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }}:{{ template "chatwoot.redis.port" . }}
 {{- else if .Values.env.REDIS_TLS -}}
-    "rediss://:{{ .Values.redis.password }}@{{ .Values.redis.host }}:{{ .Values.redis.port }}"
+    rediss://:$(REDIS_PASSWORD)@{{ .Values.redis.host }}:{{ .Values.redis.port }}
 {{- else -}}
-    "redis://:{{ .Values.redis.password }}@{{ .Values.redis.host }}:{{ .Values.redis.port }}"
+    redis://:$(REDIS_PASSWORD)@{{ .Values.redis.host }}:{{ .Values.redis.port }}
 {{- end -}}
 {{- end -}}

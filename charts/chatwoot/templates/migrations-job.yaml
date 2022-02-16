@@ -50,7 +50,23 @@ spec:
         - exec
         - rails
         - db:chatwoot_prepare
+        env:
+        {{- if .Values.postgresql.existingSecret }}
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.postgresql.existingSecret }}
+              key: {{ default "password" .Values.postgresql.existingSecretKey }}
+        {{- end }}
+        {{- if .Values.redis.existingSecret }}
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.redis.existingSecret }}
+              key: {{ default "password" .Values.redis.existingSecretKey }}
+        {{- end }}
         envFrom:
-          - configMapRef:
+          - secretRef:
               name: {{ template "chatwoot.fullname" . }}-env
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+      serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
