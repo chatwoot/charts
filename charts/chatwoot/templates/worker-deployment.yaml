@@ -38,8 +38,23 @@ spec:
             - sidekiq
             - -C
             - config/sidekiq.yml
+          env:
+          {{- if .Values.postgresql.existingSecret }}
+          - name: POSTGRES_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.postgresql.existingSecret }}
+                key: {{ default "password" .Values.postgresql.existingSecretKey }}
+          {{- end }}
+          {{- if .Values.redis.existingSecret }}
+          - name: REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: {{ .Values.redis.existingSecret }}
+                key: {{ default "password" .Values.redis.existingSecretKey }}
+          {{- end }}
           envFrom:
-            - configMapRef:
+            - secretRef:
                 name: {{ template "chatwoot.fullname" . }}-env
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-workers
@@ -48,6 +63,7 @@ spec:
             {{- toYaml . | nindent 12 }}
             {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+      serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
 
 status: {}
 
