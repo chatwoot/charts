@@ -217,12 +217,15 @@ Redis is installed along with the chart if you choose the default setup. To use 
 
 ## Upgrading
 
+## To 0.8.x
+
+Move from Kubernetes ConfigMap to Kubernetes Secrets for environment variables. This is not a breaking change.
 
 ## To 0.6.x
 
 Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
-labels used for deployements. Please delete your helm release and recreate. Deleting your helm release will 
-not delete your persistent volumes used for redis and postgres and as such your data should be safe. 
+labels used for deployments. Please delete your helm release and recreate it. Deleting your helm release will
+not delete your persistent volumes used for Redis, and Postgres and as such your data should be safe.
 
 ```
 helm delete chatwoot
