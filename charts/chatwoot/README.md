@@ -1,6 +1,6 @@
  # Chatwoot
 
-[Chatwoot](https://chatwoot.co) is a customer engagement suite. an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud, etc. 🔥💬
+[Chatwoot](https://chatwoot.com) is a customer engagement suite. an open-source alternative to Intercom, Zendesk, Salesforce Service Cloud, etc. 🔥💬
 
 ## TL;DR
 
