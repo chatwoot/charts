@@ -31,7 +31,7 @@ sources:
   - http://www.chatwoot.com
 
 # This is the chart version.
-version: 0.8.5
+version: 0.8.6
 
 # This is the application version.
-appVersion: "v2.4.1"
+appVersion: "v2.5.0"
