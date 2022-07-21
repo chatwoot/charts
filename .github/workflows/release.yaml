@@ -26,7 +26,7 @@ jobs:
 
       - name: Add helm dependencies
         run: |
-          helm repo add bitnami-pre-2022 "https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami"
+          helm repo add bitnami "https://charts.bitnami.com/bitnami" 
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.2.1

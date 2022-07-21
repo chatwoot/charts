@@ -104,9 +104,11 @@ affinity: {}
 postgresql:
   enabled: true
   nameOverride: chatwoot-postgresql
-  postgresqlDatabase: chatwoot_production
-  postgresqlUsername: postgres
-  postgresqlPassword: postgres
+  auth:
+    username: postgres
+    password: postgres
+    database: chatwoot_production
+    postgresPassword: postgres
   # The following variables are only used when internal PG is disabled
   # postgresqlHost: postgres
   # postgresqlPort: 5432
