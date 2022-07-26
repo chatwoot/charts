@@ -75,12 +75,15 @@ ingress:
               name: chatwoot
               port:
                 number: 3000
-  tls:
-    - crt: ""
-      key: ""
-      label: "chart-example"
-      hosts:
-        - "chart-example.local"
+  # It's highly recommended to use TLS protocol to secure
+  # your activities. Before specifying cert and key you should
+  # set ".Values.ingress.enabled" to "true"
+  # tls:
+  #   - crt: ""
+  #     key: ""
+  #     label: "chart-example"
+  #     hosts:
+  #       - "chart-example.local"
 
 resources:
   {}
