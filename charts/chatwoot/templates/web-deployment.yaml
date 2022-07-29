@@ -9,7 +9,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  replicas: {{ int .Values.web.replica }}
+  replicas: {{ int .Values.web.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "chatwoot.fullname" . }}

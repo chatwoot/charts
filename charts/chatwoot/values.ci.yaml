@@ -1,7 +1,11 @@
 web:
-  replica: 1
+  hpa:
+    enabled: true
+  replicaCount: 1
 worker:
-  replica: 1
+  hpa:
+    enabled: true
+  replicaCount: 1
 
 redis:
   replica:

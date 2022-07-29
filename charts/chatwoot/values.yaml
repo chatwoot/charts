@@ -8,9 +8,19 @@ image:
   pullPolicy: IfNotPresent
 
 web:
-  replica: 1
+  hpa:
+    enabled: false
+    cputhreshold: 60
+    minpods: 2
+    maxpods: 10
+  replicaCount: 1
 worker:
-  replica: 2
+  hpa:
+    enabled: false
+    cputhreshold: 60
+    minpods: 4
+    maxpods: 10  
+  replicaCount: 2
 
 services:
   name: chatwoot

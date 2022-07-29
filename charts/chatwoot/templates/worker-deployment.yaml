@@ -9,7 +9,7 @@ metadata:
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
 spec:
-  replicas: {{ int .Values.worker.replica }}
+  replicas: {{ int .Values.worker.replicaCount }}
   selector:
     matchLabels:
       app: {{ template "chatwoot.fullname" . }}
@@ -68,4 +68,3 @@ spec:
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
 
 status: {}
-
