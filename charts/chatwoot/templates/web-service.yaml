@@ -15,7 +15,7 @@ metadata:
 spec:
   ports:
     - name: {{ .Values.services.name | quote}}
-      port: {{ int .Values.services.internlPort }}
+      port: {{ int .Values.services.internalPort }}
       targetPort: {{ int .Values.services.targetPort }}
   type: {{ .Values.services.type }}
   selector:

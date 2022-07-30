@@ -1,8 +1,27 @@
 web:
-  replica: 1
+  hpa:
+    enabled: true
+    cputhreshold: 80
+    minpods: 1
+    maxpods: 10
+  replicaCount: 1
 worker:
-  replica: 1
+  hpa:
+    cputhreshold: 80
+    minpods: 1
+    maxpods: 10
+    enabled: true
+  replicaCount: 1
 
 redis:
-  replica:
-    replicaCount: 1
+  architecture: standalone
+  # replica:
+  #   replicaCount: 1
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi

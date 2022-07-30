@@ -8,13 +8,27 @@ image:
   pullPolicy: IfNotPresent
 
 web:
-  replica: 1
+  hpa:
+     # set this to true to enable horizontal pod autoscaling
+     # uncomment values.resources section if hpa is enabled
+    enabled: false
+    cputhreshold: 75
+    minpods: 1
+    maxpods: 10
+  replicaCount: 1
 worker:
-  replica: 2
+  hpa:
+    # set this to true to enable horizontal pod autoscaling
+    # uncomment values.resources section if hpa is enabled
+    enabled: false
+    cputhreshold: 75
+    minpods: 2
+    maxpods: 10
+  replicaCount: 2
 
 services:
   name: chatwoot
-  internlPort: 3000
+  internalPort: 3000
   targetPort: 3000
   type: LoadBalancer
   annotations: {}
@@ -82,18 +96,11 @@ resources: {}
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
   # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
+  #   cpu: 500m
+  #   memory: 512Mi
   # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+  #   cpu: 250m
+  #   memory: 256Mi
 
 nodeSelector: {}
 
@@ -131,6 +138,8 @@ redis:
     persistence:
       enabled: true
       # If change pvc size redis.master.persistence.size: 20Gi
+  replica:
+    replicaCount: 1
 
 # Provide affinity for hooks if needed
 hooks:
