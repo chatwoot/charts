@@ -247,11 +247,20 @@ helm search repo chatwoot
 #if it is major version update, refer to the changelog before proceeding
 helm upgrade chatwoot chatwoot/chatwoot -f <your-custom-values>.yaml
 ```
-## To 0.8.x
+
+### To 0.9.x
+
+This release adds support for horizontal pod autoscaling(hpa) for chatwoot-web and chatwoot-worker deployments.
+Also, this changes the default redis replica count to `1`. The `Values.web.replicas` and `Values.worker. replicas` parameters
+where renamed to `Values.web.replicaCount` and `Values.worker.replicaCount` respectively. Also `services.internlPort` was renamed
+to `services.internalPort`.
+
+Please make the necessary changes in your custom values file if needed.
+### To 0.8.x
 
 Move from Kubernetes ConfigMap to Kubernetes Secrets for environment variables. This is not a breaking change.
 
-## To 0.6.x
+### To 0.6.x
 
 Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
 labels used for deployments. Please delete your helm release and recreate it. Deleting your helm release will
