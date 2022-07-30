@@ -256,6 +256,7 @@ where renamed to `Values.web.replicaCount` and `Values.worker.replicaCount` resp
 to `services.internalPort`.
 
 Please make the necessary changes in your custom values file if needed.
+
 ### To 0.8.x
 
 Move from Kubernetes ConfigMap to Kubernetes Secrets for environment variables. This is not a breaking change.
