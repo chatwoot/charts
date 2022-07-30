@@ -23,7 +23,7 @@ worker:
     enabled: false
     cputhreshold: 75
     minpods: 2
-    maxpods: 10  
+    maxpods: 10
   replicaCount: 2
 
 services:
