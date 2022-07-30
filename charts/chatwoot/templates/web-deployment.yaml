@@ -40,7 +40,7 @@ spec:
             - rails
             - s
             - -p
-            - {{ .Values.services.internlPort | quote}}
+            - {{ .Values.services.internalPort | quote}}
             - -b
             - 0.0.0.0
           command:
@@ -66,7 +66,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-web
           ports:
-            - containerPort: {{ int .Values.services.internlPort }}
+            - containerPort: {{ int .Values.services.internalPort }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           {{- with .Values.resources }}
           resources:

@@ -179,7 +179,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.name | string | `""` |  |
 | services.annotations | object | `{}` |  |
-| services.internlPort | int | `3000` |  |
+| services.internalPort | int | `3000` |  |
 | services.name | string | `"chatwoot"` |  |
 | services.targetPort | int | `3000` |  |
 | services.type | string | `"LoadBalancer"` |  |

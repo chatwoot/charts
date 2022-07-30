@@ -1,5 +1,5 @@
 {{- if .Values.web.hpa.enabled -}}
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "chatwoot.fullname" . }}-web
@@ -15,5 +15,11 @@ spec:
     name: {{ template "chatwoot.fullname" . }}-web
   minReplicas: {{ .Values.web.hpa.minpods }}
   maxReplicas: {{ .Values.web.hpa.maxpods }}
-  targetCPUUtilizationPercentage: {{ .Values.web.hpa.cputhreshold }}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.web.hpa.cputhreshold }}
   {{- end }}
