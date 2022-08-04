@@ -1,6 +1,6 @@
 web:
   hpa:
-    enabled: true
+    enabled: false
     cputhreshold: 80
     minpods: 1
     maxpods: 10
@@ -10,8 +10,15 @@ worker:
     cputhreshold: 80
     minpods: 1
     maxpods: 10
-    enabled: true
+    enabled: false
   replicaCount: 1
+
+postgresql:
+  auth:
+    username: postgres
+    database: chatwoot_production
+    #password for the admin user
+    postgresPassword: postgres
 
 redis:
   architecture: standalone

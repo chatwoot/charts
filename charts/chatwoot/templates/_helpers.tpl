@@ -118,7 +118,7 @@ Set postgres secretKey
 {{- if .Values.postgresql.enabled -}}
 "postgresql-password"
 {{- else -}}
-{{- default "postgresql-password" .Values.postgresql.existingSecretKey | quote -}}
+{{- default "postgresql-password" .Values.postgresql.auth.secretKeys.adminPasswordKey | quote -}}
 {{- end -}}
 {{- end -}}
 
@@ -162,7 +162,7 @@ Set redis secretKey
 {{- if .Values.redis.enabled -}}
 "redis-password"
 {{- else -}}
-{{- default "redis-password" .Values.redis.existingSecretKey | quote -}}
+{{- default "redis-password" .Values.redis.existingSecretPasswordKey | quote -}}
 {{- end -}}
 {{- end -}}
 
