@@ -51,19 +51,19 @@ spec:
         - rails
         - db:chatwoot_prepare
         env:
-        {{- if .Values.postgresql.existingSecret }}
+        {{- if .Values.postgresql.auth.existingSecret }}
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.postgresql.existingSecret }}
-              key: {{ default "password" .Values.postgresql.existingSecretKey }}
+              name: {{ .Values.postgresql.auth.existingSecret }}
+              key: {{ default "password" .Values.postgresql.auth.secretKeys.adminPasswordKey }}
         {{- end }}
-        {{- if .Values.redis.existingSecret }}
+        {{- if .Values.redis.auth.existingSecret }}
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.redis.existingSecret }}
-              key: {{ default "password" .Values.redis.existingSecretKey }}
+              name: {{ .Values.redis.auth.existingSecret }}
+              key: {{ default "password" .Values.redis.auth.existingSecretPasswordKey }}
         {{- end }}
         envFrom:
           - secretRef:
