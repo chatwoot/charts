@@ -1,5 +1,9 @@
 apiVersion: v2
 dependencies:
+  - condition: ingress.enabled
+    name: automatic-webhook-certificates
+    repository: "https://suraj.io/helm-charts"
+    version: 0.1.1
   - condition: postgresql.enabled
     name: postgresql
     repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
