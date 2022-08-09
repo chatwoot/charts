@@ -29,7 +29,7 @@ spec:
         {{- range .hosts }}
         - {{ . | quote }}
         {{- end }}
-      secretName: {{ .secretName }}
+      secretName: {{ .label }}
     {{- end }}
   {{- end }}
   rules:
