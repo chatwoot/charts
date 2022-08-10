@@ -14,14 +14,18 @@ spec:
   {{- with .Values.tolerations }}
   tolerations:
   {{- toYaml . | nindent 4 }}
-  {{- end }}
   {{- if .Values.nodeSelector }}
   nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 4 }}
   {{- end }}
+  {{- end }}
+  
   containers:
+    {{- range $value := .Values.services}}
     - name: wget
       image: busybox
       imagePullPolicy: IfNotPresent
       command: ['wget']
-      args: ['{{ include "chatwoot.fullname" . }}:{{ .Values.services.targetPort }}']
+      args: ['{{ $value.name }}:{{ $value.targetPort }}']
+    {{- end }}
   restartPolicy: Never
+

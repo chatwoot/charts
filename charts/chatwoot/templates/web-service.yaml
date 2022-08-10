@@ -1,25 +1,26 @@
+{{- range $value := .Values.services}}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "chatwoot.fullname" . }}
+  name: {{ $value.name }}
   creationTimestamp: null
   labels:
-    app: {{ template "chatwoot.fullname" . }}
-    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
-    release: "{{ .Release.Name }}"
-    heritage: "{{ .Release.Service }}"
-  {{- with .Values.services.annotations }}
+    app: {{ template "chatwoot.fullname" $ }}
+    chart: "{{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}"
+    release: "{{ $.Release.Name }}"
+    heritage: "{{ $.Release.Service }}"
+  {{- with $value.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
     {{- end }}
 spec:
   ports:
-    - name: {{ .Values.services.name | quote}}
-      port: {{ int .Values.services.internlPort }}
-      targetPort: {{ int .Values.services.targetPort }}
-  type: {{ .Values.services.type }}
+    - port: {{ int $value.internalPort }}
+      targetPort: {{ int $value.targetPort }}
+  type: {{ $value.type }}
   selector:
-    app: {{ template "chatwoot.fullname" . }}
+    app: {{ template "chatwoot.fullname" $ }}
     role: web
 status:
   loadBalancer: {}
+{{- end}}

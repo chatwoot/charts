@@ -34,43 +34,45 @@ spec:
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
       containers:
+        {{- range $index, $value := .Values.services }}
         - args: 
             - bundle
             - exec
             - rails
             - s
             - -p
-            - {{ .Values.services.internlPort | quote}}
+            - {{ $value.internalPort | quote}}
             - -b
             - 0.0.0.0
           command:
             - docker/entrypoints/rails.sh
           env:
-          {{- if .Values.postgresql.existingSecret }}
+          {{- if $.Values.postgresql.existingSecret }}
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.postgresql.existingSecret }}
-                key: {{ default "password" .Values.postgresql.existingSecretKey }}
+                name: {{ $.Values.postgresql.existingSecret }}
+                key: {{ default "password" $.Values.postgresql.existingSecretKey }}
           {{- end }}
-          {{- if .Values.redis.existingSecret }}
+          {{- if $.Values.redis.existingSecret }}
           - name: REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.redis.existingSecret }}
-                key: {{ default "password" .Values.redis.existingSecretKey }}
+                name: {{ $.Values.redis.existingSecret }}
+                key: {{ default "password" $.Values.redis.existingSecretKey }}
           {{- end }}
           envFrom:
             - secretRef:
-                name: {{ template "chatwoot.fullname" . }}-env
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          name: {{ .Chart.Name }}-web
+                name: {{ template "chatwoot.fullname" $ }}-env
+          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
+          name: {{ $.Chart.Name }}-web-{{ $index }}
           ports:
-            - containerPort: {{ int .Values.services.internlPort }}
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.resources }}
+            - containerPort: {{ int $value.internalPort }}
+          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          {{- with $.Values.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
             {{- end }}
-      serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
+          {{- end }}
+      serviceAccountName: {{ include "chatwoot.serviceAccountName" $ }}
 status: {}

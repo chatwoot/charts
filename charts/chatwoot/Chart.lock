@@ -6,4 +6,4 @@ dependencies:
   repository: https://raw.githubusercontent.com/bitnami/charts/pre-2022/bitnami
   version: 14.7.2
 digest: sha256:c144d47d945cba6e4ab54290c7db1ccf4ec6eb0b75a0e0cda89ec3c11d57af7b
-generated: "2022-06-21T17:49:13.18754+05:30"
+generated: "2022-08-09T23:01:04.493373+02:00"
