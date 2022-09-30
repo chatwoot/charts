@@ -63,6 +63,10 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ template "chatwoot.fullname" . }}-env
+          {{- if .Values.existingEnvSecret }}
+            - secretRef:
+                name: {{ .Values.existingEnvSecret }}
+          {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-web
           ports:

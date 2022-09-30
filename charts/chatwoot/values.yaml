@@ -160,6 +160,10 @@ hooks:
     hookAnnotation: "post-install,post-upgrade"
 
 # ENVIRONMENT VARIABLES
+
+# If set, will apply environment variables found in this secret, after the variables defined in the env key.
+existingEnvSecret: ""
+
 env:
   ACTIVE_STORAGE_SERVICE: local
   ANDROID_BUNDLE_ID: com.chatwoot.app

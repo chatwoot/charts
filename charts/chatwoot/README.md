@@ -161,6 +161,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | affinity | object | `{}` |  |
+| existingEnvSecret | string | "" |  |
 | fullnameOverride | string | `""` |  |
 | hooks.affinity | object | `{}` |  |
 | hooks.migrate.env | list | `[]` |  |
