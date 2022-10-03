@@ -68,5 +68,9 @@ spec:
         envFrom:
           - secretRef:
               name: {{ template "chatwoot.fullname" . }}-env
+        {{- if .Values.existingEnvSecret }}
+          - secretRef:
+              name: {{ .Values.existingEnvSecret }}
+        {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
