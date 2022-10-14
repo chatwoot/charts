@@ -73,4 +73,11 @@ spec:
               name: {{ .Values.existingEnvSecret }}
         {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        volumeMounts:
+            - name: cache
+              mountPath: /app/tmp
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
+      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      volumes:
+        - name: cache
+          emptyDir: {}

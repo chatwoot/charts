@@ -76,5 +76,13 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
             {{- end }}
+          volumeMounts:
+            - name: cache
+              mountPath: /app/tmp
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
+      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      volumes:
+        - name: cache
+          emptyDir: {}
+      
 status: {}
