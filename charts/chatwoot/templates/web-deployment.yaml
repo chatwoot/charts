@@ -46,12 +46,12 @@ spec:
           command:
             - docker/entrypoints/rails.sh
           env:
-          {{- if .Values.postgresql.existingSecret }}
+          {{- if .Values.postgresql.auth.existingSecret }}
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: {{ .Values.postgresql.existingSecret }}
-                key: {{ default "password" .Values.postgresql.existingSecretKey }}
+                name: {{ .Values.postgresql.auth.existingSecret }}
+                key: {{ default "password" .Values.postgresql.auth.existingSecretKey }}
           {{- end }}
           {{- if .Values.redis.existingSecret }}
           - name: REDIS_PASSWORD
