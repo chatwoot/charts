@@ -72,9 +72,8 @@ spec:
           ports:
             - containerPort: {{ int .Values.services.internalPort }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          {{- with .Values.resources }}
+          {{- with .Values.web.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
             {{- end }}
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-status: {}

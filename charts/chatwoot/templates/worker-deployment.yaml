@@ -64,11 +64,9 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-workers
-          {{- with .Values.resources }}
+          {{- with .Values.worker.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
             {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-
-status: {}
