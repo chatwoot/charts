@@ -118,9 +118,9 @@ postgresql:
     # when existingSecret is defined auth.password, auth.PostgressPassword
     # is ignored.
     # existingSecret: secret-name
-    #    secretKeys:
-    #      adminPasswordKey: postgres-password
-    #      replicationPasswordKey: replication-password
+    # secretKeys:
+    #   adminPasswordKey: postgres-password
+    #   replicationPasswordKey: replication-password
   # The following variables are only used when internal PG is disabled
   # postgresqlHost: postgres
   # postgresqlPort: 5432
