@@ -14,6 +14,7 @@ worker:
   replicaCount: 1
 
 postgresql:
+  architecture: standalone
   auth:
     username: postgres
     database: chatwoot_production

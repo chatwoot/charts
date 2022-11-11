@@ -46,7 +46,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ .Values.postgresql.auth.existingSecret }}
-                key: {{ default "password" .Values.postgresql.auth.existingSecretKey }}
+                key: {{ default "password" .Values.postgresql.auth.secretKeys.adminPasswordKey }}
           {{- end }}
           {{- if .Values.redis.existingSecret }}
           - name: REDIS_PASSWORD
@@ -64,7 +64,7 @@ spec:
           {{- end }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           name: {{ .Chart.Name }}-workers
-          {{- with .Values.resources }}
+          {{- with .Values.worker.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
             {{- end }}
@@ -77,5 +77,3 @@ spec:
       volumes:
         - name: cache
           emptyDir: {}
-
-status: {}
