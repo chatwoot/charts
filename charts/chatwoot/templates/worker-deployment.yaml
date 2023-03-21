@@ -25,6 +25,9 @@ spec:
         role: worker
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/env-secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.tolerations }}
       tolerations:
