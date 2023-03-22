@@ -25,6 +25,9 @@ spec:
         role: web
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/env-secret.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
     spec:
       {{- with .Values.tolerations }}
       tolerations:
@@ -34,7 +37,7 @@ spec:
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
       containers:
-        - args: 
+        - args:
             - bundle
             - exec
             - rails
