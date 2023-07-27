@@ -52,7 +52,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `image.tag`         | Chatwoot image tag (immutable tags are recommended) | `v2.18.0`              |
 | `image.pullPolicy`  | Chatwoot image pull policy                          | `IfNotPresent`         |
 
- 
+
 ### Chatwoot Environment Variables
 
 | Name                                 | Type                                                                | Default Value                                              |
@@ -79,7 +79,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.SMTP_PORT`                      | SMTP port                                                                       | `"587"`                                                    |
 | `env.SMTP_USERNAME`                  | SMTP username                                                                   | `""`                                                       |
 | `env.USE_INBOX_AVATAR_FOR_BOT`       | Bot customizations                                                              | `"true"`                                                   |
-                                            
+
 ### Email setup for conversation continuity (Incoming emails)
 
 | Name                                | Type                                                                                                                                                    | Default Value |
@@ -123,7 +123,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `env.LOG_LEVEL`                     | string                                                              | `"info"`                                                   |
 | `env.LOG_SIZE`                      | string                                                              | `"500"`                                                    |
 
-### Third party credentials 
+### Third party credentials
 
 | Name                                | Type                                                                 | Default Value                                              |
 | ----------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------- |
@@ -155,6 +155,7 @@ The command removes all the Kubernetes components associated with the chart and 
 | `worker.hpa.minpods`                | Minimum number of pods for Chatwoot worker                           | `2`                                                        |
 | `worker.hpa.maxpods`                | Maximum number of pods for Chatwoot worker                           | `10`                                                       |
 | `worker.replicaCount`               | No of worker pods if hpa is not enabled                              | `1`                                                        |
+| `autoscaling.apiVersion`            | Autoscaling API version                                              | `autoscaling/v2`                                           |
 
 ### Other Parameters
 
@@ -301,7 +302,7 @@ helm upgrade chatwoot chatwoot/chatwoot --version="0.9.0" --namespace ug3 -f val
 5. Update and install new version of charts.
 ```
 helm repo update
-#reset web.replicaCount and worker.replicaCount to your previous values 
+#reset web.replicaCount and worker.replicaCount to your previous values
 helm install chatwoot chatwoot/chatwoot -f <your-values.yaml> #-n chatwoot
 ```
 
@@ -334,7 +335,7 @@ RAILS_ENV=production bundle exec rails c
 ::Redis::Alfred.delete(::Redis::Alfred::CHATWOOT_INSTALLATION_ONBOARDING)
 ```
 
-10. Load the Chatwoot web url, log in using the old credentials and verify the contents. Voila! Thats it!! 
+10. Load the Chatwoot web url, log in using the old credentials and verify the contents. Voila! Thats it!!
 
 ### To 0.9.x
 
@@ -351,7 +352,7 @@ Move from Kubernetes ConfigMap to Kubernetes Secrets for environment variables. 
 
 ### To 0.6.x
 
-Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector 
+Existing labels were causing issues with `helm upgrade`. `0.6.x` introduces breaking changes related to selector
 labels used for deployments. Please delete your helm release and recreate it. Deleting your helm release will
 not delete your persistent volumes used for Redis, and Postgres and as such your data should be safe.
 
