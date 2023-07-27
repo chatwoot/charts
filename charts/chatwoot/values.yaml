@@ -7,6 +7,11 @@ image:
   tag: v2.18.0
   pullPolicy: IfNotPresent
 
+# Set to autoscaling/v2beta2 for older versions of kubernetes that do not have autoscaling/v2 API (pre v1.26)
+# See https://kubernetes.io/docs/reference/using-api/deprecation-guide/#horizontalpodautoscaler-v126
+autoscaling:
+  apiVersion: autoscaling/v2
+
 web:
   hpa:
      # set this to true to enable horizontal pod autoscaling

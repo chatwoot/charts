@@ -1,5 +1,6 @@
 {{- if .Values.web.hpa.enabled -}}
-apiVersion: autoscaling/v2
+apiVersion: {{ .Values.autoscaling.apiVersion }}
+
 kind: HorizontalPodAutoscaler
 metadata:
   name: {{ template "chatwoot.fullname" . }}-web
