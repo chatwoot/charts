@@ -1,10 +1,10 @@
 apiVersion: v2
 dependencies:
   - name: common
-    repository: oci://registry-1.docker.io/bitnamicharts
+    repository: https://charts.bitnami.com/bitnami
     tags:
       - bitnami-common
-    version: 2.x.x
+    version: 2.13.3
   - condition: postgresql.enabled
     name: postgresql
     repository: https://charts.bitnami.com/bitnami
