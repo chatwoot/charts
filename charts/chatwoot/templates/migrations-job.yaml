@@ -16,6 +16,10 @@ metadata:
 spec:
   template:
     spec:
+	  {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+	    {{- toYaml . | nindent 6 }}
+	   {{- end }}
       restartPolicy: Never
       {{- with .Values.tolerations }}
       tolerations:
