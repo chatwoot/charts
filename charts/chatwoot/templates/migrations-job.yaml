@@ -24,24 +24,40 @@ spec:
       {{- if .Values.nodeSelector }}
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       initContainers:
       - name: init-postgres
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["/bin/sh"]
+        command: ["/bin/sh", "-c"]
         args:
-          - -c
-          - >-
-            PG_READY="pg_isready -h {{ template "chatwoot.postgresql.host" . }} -p {{ template "chatwoot.postgresql.port" . }}";
-            until $PG_READY;
-            do
-              sleep 2;
-            done;
-            echo "Database ready to accept connections."  ;
+          - |-
+            PG_READY="pg_isready -h {{ template "chatwoot.postgresql.host" . }} -p {{ template "chatwoot.postgresql.port" . }}"
+            until $PG_READY; do
+              sleep 2
+            done
+            echo "Database ready to accept connections."
+        {{- with .Values.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
       - name: init-redis
         image: busybox:1.28
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        command: ["sh", "-c", "until nslookup {{ template "chatwoot.redis.host" . }} ; do echo waiting for {{ template "chatwoot.redis.host" . }} ; sleep 2; done;"]
+        command: ["sh", "-c"]
+        args:
+          - |- 
+            until nslookup {{ template "chatwoot.redis.host" . }}; do
+              echo "waiting for {{ template "chatwoot.redis.host" . }}"
+              sleep 2
+            done
+        {{- with .Values.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
       containers:
       - name: "db-migrate-job"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -51,31 +67,35 @@ spec:
         - rails
         - db:chatwoot_prepare
         env:
-        {{- if .Values.postgresql.auth.existingSecret }}
+        {{- with .Values.postgresql.auth.existingSecret }}
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.postgresql.auth.existingSecret }}
-              key: {{ default "password" .Values.postgresql.auth.secretKeys.adminPasswordKey }}
+              name: {{ quote . }}
+              key: {{ default "password" $.Values.postgresql.auth.secretKeys.adminPasswordKey }}
         {{- end }}
-        {{- if .Values.redis.auth.existingSecret }}
+        {{- with .Values.redis.auth.existingSecret }}
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ .Values.redis.auth.existingSecret }}
-              key: {{ default "password" .Values.redis.auth.existingSecretPasswordKey }}
+              name: {{ quote . }}
+              key: {{ default "password" $.Values.redis.auth.existingSecretPasswordKey }}
         {{- end }}
         envFrom:
           - secretRef:
               name: {{ template "chatwoot.fullname" . }}-env
-        {{- if .Values.existingEnvSecret }}
+        {{- with .Values.existingEnvSecret }}
           - secretRef:
-              name: {{ .Values.existingEnvSecret }}
+              name: {{ quote . }}
         {{- end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         volumeMounts:
-            - name: cache
-              mountPath: /app/tmp
+          - name: cache
+            mountPath: /app/tmp
+        {{- with .Values.securityContext }}
+        securityContext:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
       {{- if .Values.securityContext }}
       securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
