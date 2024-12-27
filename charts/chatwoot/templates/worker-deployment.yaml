@@ -41,7 +41,9 @@ spec:
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
       containers:
-        - args:
+        - name: {{ .Chart.Name }}-workers
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args:
             - bundle
             - exec
             - sidekiq
@@ -69,8 +71,10 @@ spec:
             - secretRef:
                 name: {{ .Values.existingEnvSecret }}
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          name: {{ .Chart.Name }}-workers
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           {{- with .Values.worker.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
@@ -80,8 +84,9 @@ spec:
             - name: cache
               mountPath: /app/tmp
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-      {{- if .Values.securityContext }}
-      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
         - name: cache

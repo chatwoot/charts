@@ -41,7 +41,9 @@ spec:
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
       containers:
-        - args:
+        - name: {{ .Chart.Name }}-web
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          args:
             - bundle
             - exec
             - rails
@@ -74,8 +76,10 @@ spec:
             - secretRef:
                 name: {{ .Values.existingEnvSecret }}
           {{- end }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          name: {{ .Chart.Name }}-web
+          {{- with .Values.securityContext }}
+          securityContext:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           ports:
             - containerPort: {{ int .Values.services.internalPort }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
@@ -87,8 +91,9 @@ spec:
             - name: cache
               mountPath: /app/tmp
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-      {{- if .Values.securityContext }}
-      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      {{- with .Values.podSecurityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
         - name: cache
