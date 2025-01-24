@@ -3,9 +3,12 @@
 # Declare variables to be passed into your templates.
 # Overrides the image tag whose default is the chart appVersion.
 image:
-  repository: chatwoot/chatwoot
-  tag: v3.16.0
-  pullPolicy: IfNotPresent
+  repository: registry.digitalocean.com/nexmeter-registry/omnipurchase
+  tag: latest
+  pullPolicy: Always
+
+imagePullSecrets:
+  - name: registry-nexmeter-registry 
 
 # Set to autoscaling/v2beta2 for older versions of kubernetes that do not have autoscaling/v2 API (pre v1.26)
 # See https://kubernetes.io/docs/reference/using-api/deprecation-guide/#horizontalpodautoscaler-v126
@@ -57,14 +60,9 @@ services:
   name: chatwoot
   internalPort: 3000
   targetPort: 3000
-  type: LoadBalancer
+  type: ClusterIP
   annotations: {}
-    # For example
-    #  service.beta.kubernetes.io/aws-load-balancer-type: external
-    #  service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
-    #  service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
 
-imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
@@ -95,15 +93,15 @@ service:
   port: 80
 
 ingress:
-  enabled: false
-  # For Kubernetes >= 1.18 you should specify the ingress-controller via the field ingressClassName
-  # See https://kubernetes.io/blog/2020/04/02/improvements-to-the-ingress-api-in-kubernetes-1.18/#specifying-the-class-of-an-ingress
-  # ingressClassName: nginx
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  className: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-buffer-size: "128k"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
   hosts:
-    - host: ""
+    - host: omnipurchase.dev.omnifylabs.com
       paths:
         - path: /
           pathType: Prefix
@@ -112,10 +110,6 @@ ingress:
               name: chatwoot
               port:
                 number: 3000
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - chart-example.local
 
 nodeSelector: {}
 
@@ -124,12 +118,12 @@ tolerations: []
 affinity: {}
 
 postgresql:
-  enabled: true
-  nameOverride: chatwoot-postgresql
+  enabled: false
+  # nameOverride: chatwoot-postgresql
   auth:
-    username: postgres
-    postgresPassword: postgres
-    database: chatwoot_production
+    username: postgres-username
+    postgresPassword: postgres-password
+    database: defaultdb
     # when existingSecret is defined auth.password, auth.PostgressPassword
     # is ignored.
     # existingSecret: secret-name
@@ -137,28 +131,23 @@ postgresql:
     #   adminPasswordKey: postgres-password
     #   replicationPasswordKey: replication-password
   # The following variables are only used when internal PG is disabled
-  # postgresqlHost: postgres
-  # postgresqlPort: 5432
+  postgresqlHost: private-db-postgresql-sfo3-39184-do-user-15526827-0.f.db.ondigitalocean.com
+  postgresqlPort: 25060
+  sslmode: require
 
 redis:
-  enabled: true
-  nameOverride: chatwoot-redis
+  enabled: false
   auth:
-    password: redis
+    # username: default
+    # password:
     # when defined the password field is ignored
-    #    existingSecret: secret-name
-    #    existingSecretPasswordKey: ""
+    existingSecret: null
+    # existingSecretPasswordKey: 
   # The following variables are only used when internal Redis is disabled
-  # host: redis
+  host: private-db-caching-sfo3-20344-do-user-15526827-0.f.db.ondigitalocean.com
   # Just omit the password field if your redis cluster doesn't use password
-  # password: redis
-  # port: 6379
-  master:
-    persistence:
-      enabled: true
-      # If change pvc size redis.master.persistence.size: 20Gi
-  replica:
-    replicaCount: 1
+  password: redis-password
+  port: 25061
 
 # Provide affinity for hooks if needed
 hooks:
