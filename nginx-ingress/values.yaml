@@ -1,0 +1,14 @@
+controller:
+  config:
+    use-proxy-protocol: false
+    use-forwarded-headers: true
+    enable-underscores-in-headers: "true"
+  service:
+    targetPorts:
+      http: http
+      https: http
+    annotations:
+      service.beta.kubernetes.io/do-loadbalancer-protocol: "https"
+      service.beta.kubernetes.io/do-loadbalancer-tls-ports: "443"
+      service.beta.kubernetes.io/do-loadbalancer-redirect-http-to-https: "true"
+      service.beta.kubernetes.io/do-loadbalancer-certificate-id: "f199e09f-4128-4305-b6a5-2fb06071cd4a"
