@@ -126,6 +126,9 @@ affinity: {}
 postgresql:
   enabled: true
   nameOverride: chatwoot-postgresql
+  image:
+    registry: ghcr.io
+    repository: chatwoot/pgvector
   auth:
     username: postgres
     postgresPassword: postgres
