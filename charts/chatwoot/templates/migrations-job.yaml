@@ -49,6 +49,10 @@ spec:
       containers:
       - name: "db-migrate-job"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        {{- with .Values.hooks.migrate.resources }}
+        resources:
+          {{- toYaml . | nindent 10 }}
+        {{- end }}
         args:
         - bundle
         - exec
