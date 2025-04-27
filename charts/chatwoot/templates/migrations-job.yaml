@@ -43,7 +43,7 @@ spec:
             done;
             echo "Database ready to accept connections."  ;
       - name: init-redis
-        image: busybox:1.28
+        image: "{{ .Values.global.imageRegistry | default "" }}busybox:1.28"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ["sh", "-c", "until nslookup {{ template "chatwoot.redis.host" . }} ; do echo waiting for {{ template "chatwoot.redis.host" . }} ; sleep 2; done;"]
       containers:
