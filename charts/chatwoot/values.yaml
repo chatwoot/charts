@@ -164,6 +164,21 @@ redis:
     replicaCount: 1
 
 # Provide affinity for hooks if needed
+## Configuración de almacenamiento persistente
+## Habilita el uso de un PersistentVolumeClaim para /app/storage
+persistence:
+  enabled: false
+  ## Si se establece en "false" se usará un directorio efímero (emptyDir)
+  ## Si se establece en "true" se creará un PVC con la configuración proporcionada
+  storageClass: ""
+  ## Dejar en blanco para usar el StorageClass predeterminado
+  ## O especificar un StorageClass existente
+  accessModes:
+    - ReadWriteOnce
+  size: 10Gi
+  ## Tamaño del volumen persistente
+  ## Se recomienda un mínimo de 10Gi para entornos de producción
+
 hooks:
   affinity: {}
   migrate:
