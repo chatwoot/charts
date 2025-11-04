@@ -144,6 +144,8 @@ postgresql:
   # postgresqlPort: 5432
 
 redis:
+  image:
+    repository: bitnamilegacy/redis
   enabled: true
   nameOverride: chatwoot-redis
   auth:
