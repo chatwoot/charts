@@ -22,6 +22,8 @@ postgresql:
     postgresPassword: postgres
 
 redis:
+  image:
+    repository: bitnamilegacy/redis
   architecture: standalone
   # replica:
   #   replicaCount: 1
