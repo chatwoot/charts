@@ -80,15 +80,30 @@ serviceAccount:
 podAnnotations: {}
 
 podSecurityContext: {}
-  # fsGroup: 2000
+  # PSA restricted example (UID 1000 requires a rootless Chatwoot image):
+  # runAsNonRoot: true
+  # runAsUser: 1000
+  # runAsGroup: 1000
+  # fsGroup: 1000
+  # seccompProfile:
+  #   type: RuntimeDefault
 
 securityContext: {}
+  # Container security context fields (allowPrivilegeEscalation, capabilities, runAsNonRoot, seccompProfile, etc.)
   # capabilities:
   #   drop:
   #   - ALL
   # readOnlyRootFilesystem: true
+  # PSA restricted example (UID 1000 requires a rootless Chatwoot image):
   # runAsNonRoot: true
   # runAsUser: 1000
+  # runAsGroup: 1000
+  # allowPrivilegeEscalation: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+  # seccompProfile:
+  #   type: RuntimeDefault
 
 service:
   type: ClusterIP
@@ -170,6 +185,26 @@ hooks:
   affinity: {}
   migrate:
     env: []
+    podSecurityContext: {}
+    securityContext: {}
+    # PSA restricted example (UID 1000 requires a rootless Chatwoot image):
+    # podSecurityContext:
+    #   runAsNonRoot: true
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   fsGroup: 1000
+    #   seccompProfile:
+    #     type: RuntimeDefault
+    # securityContext:
+    #   allowPrivilegeEscalation: false
+    #   capabilities:
+    #     drop:
+    #       - ALL
+    #   runAsNonRoot: true
+    #   runAsUser: 1000
+    #   runAsGroup: 1000
+    #   seccompProfile:
+    #     type: RuntimeDefault
     resources:
       limits:
         memory: 1000Mi

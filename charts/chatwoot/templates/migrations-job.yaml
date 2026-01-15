@@ -1,3 +1,12 @@
+{{- $migrateSecurityContext := .Values.hooks.migrate.securityContext | default .Values.securityContext }}
+{{- $migrateContainerSecurityContext := omit (default (dict) $migrateSecurityContext) "fsGroup" "fsGroupChangePolicy" "supplementalGroups" "sysctls" }}
+{{- $migratePodSecurityContext := .Values.hooks.migrate.podSecurityContext }}
+{{- if not $migratePodSecurityContext }}
+{{- $migratePodSecurityContext = .Values.podSecurityContext }}
+{{- end }}
+{{- if not $migratePodSecurityContext }}
+{{- $migratePodSecurityContext = omit (default (dict) .Values.securityContext) "allowPrivilegeEscalation" "capabilities" "privileged" "readOnlyRootFilesystem" "procMount" }}
+{{- end }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -32,6 +41,9 @@ spec:
       - name: init-postgres
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if $migrateContainerSecurityContext }}
+        securityContext: {{- toYaml $migrateContainerSecurityContext | nindent 10 }}
+        {{- end }}
         command: ["/bin/sh"]
         args:
           - -c
@@ -45,10 +57,16 @@ spec:
       - name: init-redis
         image: busybox:1.28
         imagePullPolicy: {{ .Values.image.pullPolicy }}
+        {{- if $migrateContainerSecurityContext }}
+        securityContext: {{- toYaml $migrateContainerSecurityContext | nindent 10 }}
+        {{- end }}
         command: ["sh", "-c", "until nslookup {{ template "chatwoot.redis.host" . }} ; do echo waiting for {{ template "chatwoot.redis.host" . }} ; sleep 2; done;"]
       containers:
       - name: "db-migrate-job"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        {{- if $migrateContainerSecurityContext }}
+        securityContext: {{- toYaml $migrateContainerSecurityContext | nindent 10 }}
+        {{- end }}
         args:
         - bundle
         - exec
@@ -81,8 +99,8 @@ spec:
             - name: cache
               mountPath: /app/tmp
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-      {{- if .Values.securityContext }}
-      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      {{- if $migratePodSecurityContext }}
+      securityContext: {{- toYaml $migratePodSecurityContext | nindent 8 }}
       {{- end }}
       volumes:
         - name: cache

@@ -1,3 +1,8 @@
+{{- $podSecurityContext := .Values.podSecurityContext }}
+{{- if not $podSecurityContext }}
+{{- $podSecurityContext = omit (default (dict) .Values.securityContext) "allowPrivilegeEscalation" "capabilities" "privileged" "readOnlyRootFilesystem" "procMount" }}
+{{- end }}
+{{- $containerSecurityContext := omit (default (dict) .Values.securityContext) "fsGroup" "fsGroupChangePolicy" "supplementalGroups" "sysctls" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -76,14 +81,16 @@ spec:
             {{- toYaml . | nindent 12 }}
             {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- if $containerSecurityContext }}
+          securityContext: {{- toYaml $containerSecurityContext | nindent 12 }}
+          {{- end }}
           volumeMounts:
             - name: cache
               mountPath: /app/tmp
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-      {{- if .Values.securityContext }}
-      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      {{- if $podSecurityContext }}
+      securityContext: {{- toYaml $podSecurityContext | nindent 8 }}
       {{- end }}
       volumes:
         - name: cache
           emptyDir: {}
-

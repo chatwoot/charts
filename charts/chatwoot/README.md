@@ -167,6 +167,8 @@ The command removes all the Kubernetes components associated with the chart and 
 | hooks.affinity | object | `{}` |  |
 | hooks.migrate.env | list | `[]` |  |
 | hooks.migrate.hookAnnotation | string | `"post-install,post-upgrade"` |  |
+| hooks.migrate.podSecurityContext | object | `{}` |  |
+| hooks.migrate.securityContext | object | `{}` |  |
 | hooks.migrate.resources.limits.memory | string | `"1000Mi"` |  |
 | hooks.migrate.resources.requests.memory | string | `"1000Mi"` |  |
 | imagePullSecrets | list | `[]` |  |
@@ -181,11 +183,11 @@ The command removes all the Kubernetes components associated with the chart and 
 | nameOverride | string | `""` |  |
 | nodeSelector | object | `{}` |  |
 | podAnnotations | object | `{}` |  |
-| podSecurityContext | object | `{}` |  |
+| podSecurityContext | object | `{}` | Pod-level security context for chatwoot pods |
 | redis.master.persistence.enabled | bool | `true` |  |
 | redis.nameOverride | string | `"chatwoot-redis"` |  |
 | resources | object | `{}` |  |
-| securityContext | object | `{}` |  |
+| securityContext | object | `{}` | Container security context for chatwoot containers |
 | service.port | int | `80` |  |
 | service.type | string | `"ClusterIP"` |  |
 | serviceAccount.annotations | object | `{}` |  |
