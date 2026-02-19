@@ -22,4 +22,10 @@ spec:
       target:
         type: Utilization
         averageUtilization: {{ .Values.worker.hpa.cputhreshold }}
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: {{ .Values.worker.hpa.memorythreshold }}
   {{- end }}

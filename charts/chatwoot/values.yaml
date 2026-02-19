@@ -18,6 +18,7 @@ web:
      # uncomment values.resources section if hpa is enabled
     enabled: false
     cputhreshold: 75
+    memorythreshold: 75
     minpods: 1
     maxpods: 10
   replicaCount: 1
@@ -38,6 +39,7 @@ worker:
     # uncomment values.resources section if hpa is enabled
     enabled: false
     cputhreshold: 75
+    memorythreshold: 75
     minpods: 2
     maxpods: 10
   replicaCount: 2
