@@ -32,3 +32,4 @@ jobs:
         uses: helm/chart-releaser-action@v1.2.1
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          HELM_EXPERIMENTAL_OCI: "1"
