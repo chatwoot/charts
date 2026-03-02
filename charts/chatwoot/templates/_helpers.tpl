@@ -137,7 +137,9 @@ Set postgres port
 Set redis host
 */}}
 {{- define "chatwoot.redis.host" -}}
-{{- if .Values.redis.enabled -}}
+{{- if and .Values.redis.enabled .Values.redis.sentinel.enabled -}}
+{{- template "chatwoot.redis.fullname" . -}}-headless
+{{- else if .Values.redis.enabled -}}
 {{- template "chatwoot.redis.fullname" . -}}-master
 {{- else -}}
 {{- .Values.redis.host }}
