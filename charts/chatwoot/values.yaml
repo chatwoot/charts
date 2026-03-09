@@ -163,6 +163,9 @@ redis:
   sentinel:
     enabled: false
     # masterSet: mymaster
+    # image:
+    #   repository: bitnamilegacy/redis-sentinel
+    #   tag: 6.2.7-debian-11-r3
   master:
     persistence:
       enabled: true

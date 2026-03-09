@@ -1,0 +1,42 @@
+web:
+  hpa:
+    enabled: false
+    cputhreshold: 80
+    minpods: 1
+    maxpods: 10
+  replicaCount: 1
+worker:
+  hpa:
+    cputhreshold: 80
+    minpods: 1
+    maxpods: 10
+    enabled: false
+  replicaCount: 1
+
+postgresql:
+  architecture: standalone
+  auth:
+    username: postgres
+    database: chatwoot_production
+    #password for the admin user
+    postgresPassword: postgres
+
+redis:
+  image:
+    repository: bitnamilegacy/redis
+  sentinel:
+    enabled: true
+    masterSet: mymaster
+    image:
+      repository: bitnamilegacy/redis-sentinel
+      tag: 6.2.7-debian-11-r3
+  replica:
+    replicaCount: 3
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi
