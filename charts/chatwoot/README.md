@@ -161,12 +161,14 @@ Enable Sentinel for high availability with automatic failover. `REDIS_SENTINELS`
 | Name                                | Type                                                                 | Default Value                                              |
 | ----------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `web.hpa.enabled`                   | Horizontal Pod Autoscaling for Chatwoot web                          | `false`                                                    |
-| `web.hpa.cputhreshold`              | CPU threshold for Chatwoot web                                       | `80`                                                       |
+| `web.hpa.cputhreshold`              | CPU threshold for Chatwoot web                                       | `75`                                                       |
+| `web.hpa.memorythreshold`           | Memory threshold for Chatwoot web                                    | `75`                                                       |
 | `web.hpa.minpods`                   | Minimum number of pods for Chatwoot web                              | `1`                                                        |
 | `web.hpa.maxpods`                   | Maximum number of pods for Chatwoot web                              | `10`                                                       |
 | `web.replicaCount`                  | No of web pods if hpa is not enabled                                 | `1`                                                        |
 | `worker.hpa.enabled`                | Horizontal Pod Autoscaling for Chatwoot worker                       | `false`                                                    |
-| `worker.hpa.cputhreshold`           | CPU threshold for Chatwoot worker                                    | `80`                                                       |
+| `worker.hpa.cputhreshold`           | CPU threshold for Chatwoot worker                                    | `75`                                                       |
+| `worker.hpa.memorythreshold`        | Memory threshold for Chatwoot worker                                 | `75`                                                       |
 | `worker.hpa.minpods`                | Minimum number of pods for Chatwoot worker                           | `2`                                                        |
 | `worker.hpa.maxpods`                | Maximum number of pods for Chatwoot worker                           | `10`                                                       |
 | `worker.replicaCount`               | No of worker pods if hpa is not enabled                              | `1`                                                        |
