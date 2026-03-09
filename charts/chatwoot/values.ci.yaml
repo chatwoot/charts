@@ -1,16 +1,18 @@
 web:
   hpa:
     enabled: false
-    cputhreshold: 80
+    cputhreshold: 75
+    memorythreshold: 75
     minpods: 1
     maxpods: 10
   replicaCount: 1
 worker:
   hpa:
-    cputhreshold: 80
+    enabled: false
+    cputhreshold: 75
+    memorythreshold: 75
     minpods: 1
     maxpods: 10
-    enabled: false
   replicaCount: 1
 
 postgresql:
