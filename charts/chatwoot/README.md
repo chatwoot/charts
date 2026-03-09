@@ -114,6 +114,8 @@ The command removes all the Kubernetes components associated with the chart and 
 | `redis.sentinel.enabled`            | Enable Redis Sentinel. Auto-configures `REDIS_SENTINELS` and `REDIS_SENTINEL_MASTER_NAME`. | `false`                                |
 | `redis.sentinel.masterSet`          | Redis Sentinel master set name                                             | `mymaster`                                          |
 | `redis.replica.replicaCount`        | Number of Redis replicas (used to generate sentinel addresses)             | `3`                                                 |
+| `env.REDIS_SENTINELS`               | Sentinel host:port list for external Redis Sentinel (when `redis.enabled=false`). | `""`                                          |
+| `env.REDIS_SENTINEL_MASTER_NAME`    | Sentinel master name for external Redis Sentinel (when `redis.enabled=false`).    | `""`                                          |
 
 
 ### Logging variables
