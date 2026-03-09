@@ -191,6 +191,30 @@ Set redis password
 {{- end -}}
 
 {{/*
+Set redis sentinels
+*/}}
+{{- define "chatwoot.redis.sentinels" -}}
+{{- if and .Values.redis.enabled .Values.redis.sentinel.enabled -}}
+{{- $fullname := include "chatwoot.redis.fullname" . -}}
+{{- $replicaCount := int (default 3 .Values.redis.replica.replicaCount) -}}
+{{- $sentinels := list -}}
+{{- range $i := until $replicaCount -}}
+{{- $sentinels = append $sentinels (printf "%s-node-%d.%s-headless:26379" $fullname $i $fullname) -}}
+{{- end -}}
+{{- join "," $sentinels -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Set redis sentinel master name
+*/}}
+{{- define "chatwoot.redis.sentinelMasterName" -}}
+{{- if and .Values.redis.enabled .Values.redis.sentinel.enabled -}}
+{{- default "mymaster" .Values.redis.sentinel.masterSet -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
 Set redis URL
 */}}
 {{- define "chatwoot.redis.url" -}}
