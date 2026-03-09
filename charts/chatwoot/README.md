@@ -103,19 +103,31 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Redis variables
 
-| Name                                | Type                                                                       | Default Value                                       |
+| Name                                | Description                                                                | Default Value                                       |
 | ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
-| `redis.auth.password`               | Password used for internal redis cluster                                   | `redis`                                             |
 | `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.     | `true`                                              |
+| `redis.auth.password`               | Password used for internal redis cluster                                   | `redis`                                             |
+| `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
+
+#### External Redis (when `redis.enabled=false`)
+
+| Name                                | Description                                                                | Default Value                                       |
+| ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
 | `redis.host`                        | Redis host name                                                            | `""`                                                |
 | `redis.port`                        | Redis port                                                                 | `""`                                                |
 | `redis.password`                    | Redis password                                                             | `""`                                                |
-| `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
-| `redis.sentinel.enabled`            | Enable Redis Sentinel. Auto-configures `REDIS_SENTINELS` and `REDIS_SENTINEL_MASTER_NAME`. | `false`                                |
-| `redis.sentinel.masterSet`          | Redis Sentinel master set name                                             | `mymaster`                                          |
-| `redis.replica.replicaCount`        | Number of Redis replicas (used to generate sentinel addresses)             | `3`                                                 |
-| `env.REDIS_SENTINELS`               | Sentinel host:port list for external Redis Sentinel (when `redis.enabled=false`). | `""`                                          |
-| `env.REDIS_SENTINEL_MASTER_NAME`    | Sentinel master name for external Redis Sentinel (when `redis.enabled=false`).    | `""`                                          |
+| `env.REDIS_SENTINELS`               | Comma-separated list of sentinel host:port pairs (e.g. `sentinel-0:26379,sentinel-1:26379`) | `""`                                  |
+| `env.REDIS_SENTINEL_MASTER_NAME`    | Sentinel master name                                                       | `""`                                                |
+
+#### Redis Sentinel (when using the built-in Redis)
+
+Enable Sentinel for high availability with automatic failover. `REDIS_SENTINELS` and `REDIS_SENTINEL_MASTER_NAME` env vars are auto-configured.
+
+| Name                                | Description                                                                | Default Value                                       |
+| ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
+| `redis.sentinel.enabled`            | Enable Redis Sentinel                                                      | `false`                                             |
+| `redis.sentinel.masterSet`          | Sentinel master set name                                                   | `mymaster`                                          |
+| `redis.replica.replicaCount`        | Number of Redis replicas                                                   | `3`                                                 |
 
 
 ### Logging variables
