@@ -111,8 +111,9 @@ The command removes all the Kubernetes components associated with the chart and 
 | `redis.port`                        | Redis port                                                                 | `""`                                                |
 | `redis.password`                    | Redis password                                                             | `""`                                                |
 | `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
-| `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports.     | `""`                                                |
-| `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel.                | `""`                                                |
+| `redis.sentinel.enabled`            | Enable Redis Sentinel. Auto-configures `REDIS_SENTINELS` and `REDIS_SENTINEL_MASTER_NAME`. | `false`                                |
+| `redis.sentinel.masterSet`          | Redis Sentinel master set name                                             | `mymaster`                                          |
+| `redis.replica.replicaCount`        | Number of Redis replicas (used to generate sentinel addresses)             | `3`                                                 |
 
 
 ### Logging variables
