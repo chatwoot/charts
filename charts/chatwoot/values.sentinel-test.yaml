@@ -26,9 +26,14 @@ postgresql:
 redis:
   image:
     repository: bitnamilegacy/redis
-  architecture: standalone
-  # replica:
-  #   replicaCount: 1
+  sentinel:
+    enabled: true
+    masterSet: mymaster
+    image:
+      repository: bitnamilegacy/redis-sentinel
+      tag: 6.2.7-debian-11-r3
+  replica:
+    replicaCount: 3
 
 resources:
   limits:

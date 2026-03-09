@@ -103,16 +103,31 @@ The command removes all the Kubernetes components associated with the chart and 
 
 ### Redis variables
 
-| Name                                | Type                                                                       | Default Value                                       |
+| Name                                | Description                                                                | Default Value                                       |
 | ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
-| `redis.auth.password`               | Password used for internal redis cluster                                   | `redis`                                             |
 | `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.     | `true`                                              |
+| `redis.auth.password`               | Password used for internal redis cluster                                   | `redis`                                             |
+| `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
+
+#### External Redis (when `redis.enabled=false`)
+
+| Name                                | Description                                                                | Default Value                                       |
+| ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
 | `redis.host`                        | Redis host name                                                            | `""`                                                |
 | `redis.port`                        | Redis port                                                                 | `""`                                                |
 | `redis.password`                    | Redis password                                                             | `""`                                                |
-| `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
-| `env.REDIS_SENTINELS`               | Redis Sentinel can be used by passing list of sentinel host and ports.     | `""`                                                |
-| `env.REDIS_SENTINEL_MASTER_NAME`    | Redis sentinel master name is required when using sentinel.                | `""`                                                |
+| `env.REDIS_SENTINELS`               | Comma-separated list of sentinel host:port pairs (e.g. `sentinel-0:26379,sentinel-1:26379`) | `""`                                  |
+| `env.REDIS_SENTINEL_MASTER_NAME`    | Sentinel master name                                                       | `""`                                                |
+
+#### Redis Sentinel (when using the built-in Redis)
+
+Enable Sentinel for high availability with automatic failover. `REDIS_SENTINELS` and `REDIS_SENTINEL_MASTER_NAME` env vars are auto-configured.
+
+| Name                                | Description                                                                | Default Value                                       |
+| ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
+| `redis.sentinel.enabled`            | Enable Redis Sentinel                                                      | `false`                                             |
+| `redis.sentinel.masterSet`          | Sentinel master set name                                                   | `mymaster`                                          |
+| `redis.replica.replicaCount`        | Number of Redis replicas                                                   | `3`                                                 |
 
 
 ### Logging variables
@@ -146,12 +161,14 @@ The command removes all the Kubernetes components associated with the chart and 
 | Name                                | Type                                                                 | Default Value                                              |
 | ----------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------- |
 | `web.hpa.enabled`                   | Horizontal Pod Autoscaling for Chatwoot web                          | `false`                                                    |
-| `web.hpa.cputhreshold`              | CPU threshold for Chatwoot web                                       | `80`                                                       |
+| `web.hpa.cputhreshold`              | CPU threshold for Chatwoot web                                       | `75`                                                       |
+| `web.hpa.memorythreshold`           | Memory threshold for Chatwoot web                                    | `75`                                                       |
 | `web.hpa.minpods`                   | Minimum number of pods for Chatwoot web                              | `1`                                                        |
 | `web.hpa.maxpods`                   | Maximum number of pods for Chatwoot web                              | `10`                                                       |
 | `web.replicaCount`                  | No of web pods if hpa is not enabled                                 | `1`                                                        |
 | `worker.hpa.enabled`                | Horizontal Pod Autoscaling for Chatwoot worker                       | `false`                                                    |
-| `worker.hpa.cputhreshold`           | CPU threshold for Chatwoot worker                                    | `80`                                                       |
+| `worker.hpa.cputhreshold`           | CPU threshold for Chatwoot worker                                    | `75`                                                       |
+| `worker.hpa.memorythreshold`        | Memory threshold for Chatwoot worker                                 | `75`                                                       |
 | `worker.hpa.minpods`                | Minimum number of pods for Chatwoot worker                           | `2`                                                        |
 | `worker.hpa.maxpods`                | Maximum number of pods for Chatwoot worker                           | `10`                                                       |
 | `worker.replicaCount`               | No of worker pods if hpa is not enabled                              | `1`                                                        |
