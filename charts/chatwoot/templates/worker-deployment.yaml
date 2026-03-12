@@ -75,13 +75,16 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
             {{- end }}
+          {{- if .Values.securityContext }}
+          securityContext: {{ .Values.securityContext | toYaml | nindent 12 }}
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           volumeMounts:
             - name: cache
               mountPath: /app/tmp
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-      {{- if .Values.securityContext }}
-      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
       volumes:
         - name: cache

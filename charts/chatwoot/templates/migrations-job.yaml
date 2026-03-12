@@ -42,10 +42,16 @@ spec:
               sleep 2;
             done;
             echo "Database ready to accept connections."  ;
+        {{- if .Values.securityContext }}
+        securityContext: {{ .Values.securityContext | toYaml | nindent 10 }}
+        {{- end }}
       - name: init-redis
         image: busybox:1.28
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         command: ["sh", "-c", "until nslookup {{ template "chatwoot.redis.host" . }} ; do echo waiting for {{ template "chatwoot.redis.host" . }} ; sleep 2; done;"]
+        {{- if .Values.securityContext }}
+        securityContext: {{ .Values.securityContext | toYaml | nindent 10 }}
+        {{- end }}
       containers:
       - name: "db-migrate-job"
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -80,9 +86,12 @@ spec:
         volumeMounts:
             - name: cache
               mountPath: /app/tmp
+        {{- if .Values.securityContext }}
+        securityContext: {{ .Values.securityContext | toYaml | nindent 10 }}
+        {{- end }}
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
-      {{- if .Values.securityContext }}
-      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      {{- if .Values.podSecurityContext }}
+      securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
       {{- end }}
       volumes:
         - name: cache

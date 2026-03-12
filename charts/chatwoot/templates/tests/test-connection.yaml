@@ -24,4 +24,10 @@ spec:
       imagePullPolicy: IfNotPresent
       command: ['wget']
       args: ['{{ include "chatwoot.fullname" . }}:{{ .Values.services.targetPort }}']
+      {{- if .Values.securityContext }}
+      securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
+      {{- end }}
+  {{- if .Values.podSecurityContext }}
+  securityContext: {{ .Values.podSecurityContext | toYaml | nindent 8 }}
+  {{- end }}
   restartPolicy: Never
