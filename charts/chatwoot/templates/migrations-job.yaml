@@ -80,6 +80,9 @@ spec:
         volumeMounts:
             - name: cache
               mountPath: /app/tmp
+            {{- with .Values.hooks.migrate.extraVolumeMounts }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
       serviceAccountName: {{ include "chatwoot.serviceAccountName" . }}
       {{- if .Values.securityContext }}
       securityContext: {{ .Values.securityContext | toYaml | nindent 8 }}
@@ -87,3 +90,6 @@ spec:
       volumes:
         - name: cache
           emptyDir: {}
+        {{- with .Values.hooks.migrate.extraVolumes }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
