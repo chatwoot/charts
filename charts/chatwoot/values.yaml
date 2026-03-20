@@ -33,6 +33,16 @@ web:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  # extraVolumes:
+  #   - name: my-config
+  #     configMap:
+  #       name: my-configmap
+  extraVolumes: []
+  # extraVolumeMounts:
+  #   - name: my-config
+  #     mountPath: /etc/my-config
+  #     readOnly: true
+  extraVolumeMounts: []
 worker:
   hpa:
     # set this to true to enable horizontal pod autoscaling
@@ -54,6 +64,16 @@ worker:
     # requests:
     #   cpu: 250m
     #   memory: 256Mi
+  # extraVolumes:
+  #   - name: my-config
+  #     configMap:
+  #       name: my-configmap
+  extraVolumes: []
+  # extraVolumeMounts:
+  #   - name: my-config
+  #     mountPath: /etc/my-config
+  #     readOnly: true
+  extraVolumeMounts: []
 
 services:
   name: chatwoot
@@ -186,6 +206,16 @@ hooks:
     # Defaults to performing the DB migration job after the install/upgrade.
     # Can be overridden to "pre-install,pre-upgrade" with caution to perform migrations that are sometimes required for the deployment to become healthy
     hookAnnotation: "post-install,post-upgrade"
+    # extraVolumes:
+    #   - name: my-config
+    #     configMap:
+    #       name: my-configmap
+    extraVolumes: []
+    # extraVolumeMounts:
+    #   - name: my-config
+    #     mountPath: /etc/my-config
+    #     readOnly: true
+    extraVolumeMounts: []
 
 # ENVIRONMENT VARIABLES
 
