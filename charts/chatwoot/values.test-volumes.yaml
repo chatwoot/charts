@@ -1,0 +1,30 @@
+web:
+  extraVolumes:
+    - name: test-web-config
+      configMap:
+        name: test-configmap
+  extraVolumeMounts:
+    - name: test-web-config
+      mountPath: /etc/test-web-config
+      readOnly: true
+
+worker:
+  extraVolumes:
+    - name: test-worker-config
+      configMap:
+        name: test-configmap
+  extraVolumeMounts:
+    - name: test-worker-config
+      mountPath: /etc/test-worker-config
+      readOnly: true
+
+hooks:
+  migrate:
+    extraVolumes:
+      - name: test-migrate-config
+        configMap:
+          name: test-configmap
+    extraVolumeMounts:
+      - name: test-migrate-config
+        mountPath: /etc/test-migrate-config
+        readOnly: true
