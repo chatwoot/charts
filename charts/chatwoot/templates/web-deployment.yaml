@@ -87,21 +87,17 @@ spec:
             httpGet:
               path: /health
               port: {{ int .Values.services.internalPort }}
-            initialDelaySeconds: 15
-            periodSeconds: 15
+            {{- toYaml .Values.web.livenessProbe | nindent 12 }}
           readinessProbe:
             httpGet:
               path: /api
               port: {{ int .Values.services.internalPort }}
-            initialDelaySeconds: 15
-            periodSeconds: 5
+            {{- toYaml .Values.web.readinessProbe | nindent 12 }}
           startupProbe:
             httpGet:
               path: /health
               port: {{ int .Values.services.internalPort }}
-            initialDelaySeconds: 30
-            periodSeconds: 10
-            failureThreshold: 30
+            {{- toYaml .Values.web.startupProbe | nindent 12 }}
           volumeMounts:
             - name: cache
               mountPath: /app/tmp
