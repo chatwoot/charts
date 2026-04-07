@@ -176,10 +176,14 @@ redis:
   # Just omit the password field if your redis cluster doesn't use password
   # password: redis
   # port: 6379
-  # Redis 6+ ACL / Valkey RBAC: non-default user (empty = default user). REDIS_URL: scheme://username@host:port; password only in REDIS_PASSWORD.
+  # Redis 6+ ACL / Valkey RBAC: non-default user (empty = default user).
   username: ""
   # Optional logical DB index in REDIS_URL (e.g. "0" -> .../0).
   database: ""
+  # External Redis + ACL (redis.username set): embed password inside REDIS_URL (scheme://user:pass@host…).
+  # Recommended for redis-rb/TLS+ACL; when true, REDIS_PASSWORD is omitted from the env Secret to avoid duplicate AUTH.
+  # If redis.existingSecret is set, Helm cannot embed the password in REDIS_URL; keep user@host in URL + REDIS_PASSWORD from the Secret ref.
+  aclEmbedPasswordInUrl: true
   sentinel:
     enabled: false
     # masterSet: mymaster

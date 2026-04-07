@@ -215,16 +215,29 @@ Set redis sentinel master name
 {{- end -}}
 
 {{/*
+Whether to emit REDIS_PASSWORD in the generated env Secret (external Redis without redis.existingSecret).
+Omit when ACL embed mode: password is only inside REDIS_URL (avoids duplicate AUTH with redis-client/TLS+ACL).
+*/}}
+{{- define "chatwoot.redis.shouldEmitRedisPasswordKey" -}}
+{{- if .Values.redis.enabled -}}
+true
+{{- else if and (ne (trim (default "" .Values.redis.username)) "") .Values.redis.aclEmbedPasswordInUrl -}}
+false
+{{- else -}}
+true
+{{- end -}}
+{{- end -}}
+
+{{/*
 Set redis URL
 
-External Redis (redis.enabled=false): Chatwoot passes REDIS_URL and REDIS_PASSWORD separately
-(see lib/redis/config.rb); redis-rb authenticates with the ACL user from the URL and password from env.
-Do not embed the password in REDIS_URL — placeholders like $(REDIS_PASSWORD) are not expanded by Chatwoot.
+External Redis (redis.enabled=false):
+- Default user: scheme://host:port + REDIS_PASSWORD in Secret.
+- ACL (redis.username): if aclEmbedPasswordInUrl and password is available to Helm (no redis.existingSecret),
+  scheme://username:urlencoded-password@host:port/db — REDIS_PASSWORD omitted from Secret.
+  If redis.existingSecret is set, password cannot be templated into URL; use user@host + REDIS_PASSWORD via deployment env ref.
 
-- No ACL username: scheme://host:port (password from REDIS_PASSWORD only).
-- ACL / Valkey RBAC: set redis.username (external Redis only; not redis.auth, which is for bundled Bitnami Redis).
-
-Optional redis.database appends /{db} (e.g. 0 or "0"). Uses string form so index 0 is not treated as empty.
+Password components are url-encoded (urlquery) for safe inclusion in the URI userinfo.
 */}}
 {{- define "chatwoot.redis.externalDatabaseSuffix" -}}
 {{- $d := .Values.redis.database | toString | trim -}}
@@ -243,7 +256,11 @@ redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }
 {{- $port := include "chatwoot.redis.port" . | trim -}}
 {{- $user := default "" .Values.redis.username | trim -}}
 {{- $dbpath := include "chatwoot.redis.externalDatabaseSuffix" . -}}
-{{- if $user -}}
+{{- $embedAcl := and $user (not .Values.redis.existingSecret) .Values.redis.aclEmbedPasswordInUrl -}}
+{{- if and $user $embedAcl -}}
+{{- $pass := include "chatwoot.redis.password" . -}}
+{{- printf "%s://%s:%s@%s:%s%s" $scheme ($user | urlquery) ($pass | urlquery) $host $port $dbpath -}}
+{{- else if $user -}}
 {{- printf "%s://%s@%s:%s%s" $scheme $user $host $port $dbpath -}}
 {{- else if $tls -}}
 {{- printf "rediss://%s:%s%s" $host $port $dbpath -}}
