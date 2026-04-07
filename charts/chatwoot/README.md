@@ -106,8 +106,10 @@ The command removes all the Kubernetes components associated with the chart and 
 | Name                                | Description                                                                | Default Value                                       |
 | ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
 | `redis.enabled`                     | Set to `false` if using external redis and modify the below variables.     | `true`                                              |
-| `redis.auth.password`               | Password used for internal redis cluster                                   | `redis`                                             |
+| `redis.auth.password`               | Password for the **bundled** Bitnami Redis subchart (`redis.enabled=true` only). | `redis`                                             |
 | `env.REDIS_TLS`                     | Set to `true` if TLS(`rediss://`) is required                              | `false`                                             |
+
+`redis.auth` is consumed by the embedded Redis chart. For **external** Redis, use `redis.host`, `redis.port`, `redis.password`, and optionally `redis.username` / `redis.database` below.
 
 #### External Redis (when `redis.enabled=false`)
 
@@ -115,7 +117,9 @@ The command removes all the Kubernetes components associated with the chart and 
 | ----------------------------------- | -------------------------------------------------------------------------  | --------------------------------------------------- |
 | `redis.host`                        | Redis host name                                                            | `""`                                                |
 | `redis.port`                        | Redis port                                                                 | `""`                                                |
-| `redis.password`                    | Redis password                                                             | `""`                                                |
+| `redis.password`                    | Redis password (stored in `REDIS_PASSWORD`; not embedded in `REDIS_URL`).   | `""`                                                |
+| `redis.username`                    | Optional. Redis 6+ ACL / Valkey RBAC username. When set, `REDIS_URL` is `scheme://username@host:port` and the password stays only in `REDIS_PASSWORD` (see Chatwoot `Redis::Config`). | `""`                                                |
+| `redis.database`                    | Optional logical DB index appended to `REDIS_URL` as `.../{index}` (e.g. `0` or `"0"` for the default DB). | `""`                                                |
 | `env.REDIS_SENTINELS`               | Comma-separated list of sentinel host:port pairs (e.g. `sentinel-0:26379,sentinel-1:26379`) | `""`                                  |
 | `env.REDIS_SENTINEL_MASTER_NAME`    | Sentinel master name                                                       | `""`                                                |
 
