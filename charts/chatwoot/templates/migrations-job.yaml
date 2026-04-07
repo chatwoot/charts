@@ -62,7 +62,13 @@ spec:
               name: {{ .Values.postgresql.auth.existingSecret }}
               key: {{ default "password" .Values.postgresql.auth.secretKeys.adminPasswordKey }}
         {{- end }}
-        {{- if .Values.redis.auth.existingSecret }}
+        {{- if .Values.redis.existingSecret }}
+        - name: REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Values.redis.existingSecret }}
+              key: {{ default "password" .Values.redis.existingSecretKey }}
+        {{- else if and .Values.redis.enabled .Values.redis.auth.existingSecret }}
         - name: REDIS_PASSWORD
           valueFrom:
             secretKeyRef:

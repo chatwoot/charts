@@ -216,13 +216,39 @@ Set redis sentinel master name
 
 {{/*
 Set redis URL
+
+External Redis (redis.enabled=false): Chatwoot passes REDIS_URL and REDIS_PASSWORD separately
+(see lib/redis/config.rb); redis-rb authenticates with the ACL user from the URL and password from env.
+Do not embed the password in REDIS_URL — placeholders like $(REDIS_PASSWORD) are not expanded by Chatwoot.
+
+- No ACL username: scheme://host:port (password from REDIS_PASSWORD only).
+- ACL / Valkey RBAC: set redis.username (external Redis only; not redis.auth, which is for bundled Bitnami Redis).
+
+Optional redis.database appends /{db} (e.g. 0 or "0"). Uses string form so index 0 is not treated as empty.
 */}}
+{{- define "chatwoot.redis.externalDatabaseSuffix" -}}
+{{- $d := .Values.redis.database | toString | trim -}}
+{{- if and $d (ne $d "") (ne $d "<nil>") -}}
+{{- printf "/%s" $d -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "chatwoot.redis.url" -}}
 {{- if .Values.redis.enabled -}}
-    redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }}:{{ template "chatwoot.redis.port" . }}
-{{- else if .Values.env.REDIS_TLS -}}
-    rediss://:$(REDIS_PASSWORD)@{{ .Values.redis.host }}:{{ .Values.redis.port }}
+redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }}:{{ template "chatwoot.redis.port" . }}
 {{- else -}}
-    redis://:$(REDIS_PASSWORD)@{{ .Values.redis.host }}:{{ .Values.redis.port }}
+{{- $tls := .Values.env.REDIS_TLS -}}
+{{- $scheme := ternary "rediss" "redis" $tls -}}
+{{- $host := include "chatwoot.redis.host" . | trim -}}
+{{- $port := include "chatwoot.redis.port" . | trim -}}
+{{- $user := default "" .Values.redis.username | trim -}}
+{{- $dbpath := include "chatwoot.redis.externalDatabaseSuffix" . -}}
+{{- if $user -}}
+{{- printf "%s://%s@%s:%s%s" $scheme $user $host $port $dbpath -}}
+{{- else if $tls -}}
+{{- printf "rediss://%s:%s%s" $host $port $dbpath -}}
+{{- else -}}
+{{- printf "redis://%s:%s%s" $host $port $dbpath -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
