@@ -230,7 +230,7 @@ false
 Set redis URL
 
 External: default user → scheme://host:port + REDIS_PASSWORD; ACL embed → user:pass in URL (see externalAclEmbedActive);
-existingSecret → user@host in URL + REDIS_PASSWORD from Deployment ref. Userinfo is url-encoded (urlquery).
+existingSecret / no embed → user@host in URL + REDIS_PASSWORD from Deployment ref. Username (and password when embedded) uses urlquery.
 */}}
 {{- define "chatwoot.redis.externalDatabaseSuffix" -}}
 {{- $d := .Values.redis.database | toString | trim -}}
@@ -253,7 +253,7 @@ redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }
 {{- $pass := include "chatwoot.redis.password" . -}}
 {{- printf "%s://%s:%s@%s:%s%s" $scheme ($user | urlquery) ($pass | urlquery) $host $port $dbpath -}}
 {{- else if $user -}}
-{{- printf "%s://%s@%s:%s%s" $scheme $user $host $port $dbpath -}}
+{{- printf "%s://%s@%s:%s%s" $scheme ($user | urlquery) $host $port $dbpath -}}
 {{- else if $tls -}}
 {{- printf "rediss://%s:%s%s" $host $port $dbpath -}}
 {{- else -}}
