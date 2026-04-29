@@ -215,14 +215,49 @@ Set redis sentinel master name
 {{- end -}}
 
 {{/*
-Set redis URL
+True when external Redis uses ACL with user+password embedded in REDIS_URL (Helm knows the password).
+Same condition drives chatwoot.redis.url and whether REDIS_PASSWORD is emitted in the env Secret (avoid duplicate AUTH).
 */}}
+{{- define "chatwoot.redis.externalAclEmbedActive" -}}
+{{- if and (not .Values.redis.enabled) (ne (trim (default "" .Values.redis.username)) "") (not .Values.redis.existingSecret) .Values.redis.aclEmbedPasswordInUrl -}}
+true
+{{- else -}}
+false
+{{- end -}}
+{{- end -}}
+
+{{/*
+Set redis URL
+
+External: default user → scheme://host:port + REDIS_PASSWORD; ACL embed → user:pass in URL (see externalAclEmbedActive);
+existingSecret / no embed → user@host in URL + REDIS_PASSWORD from Deployment ref. Username (and password when embedded) uses urlquery.
+*/}}
+{{- define "chatwoot.redis.externalDatabaseSuffix" -}}
+{{- $d := .Values.redis.database | toString | trim -}}
+{{- if and $d (ne $d "") (ne $d "<nil>") -}}
+{{- printf "/%s" $d -}}
+{{- end -}}
+{{- end -}}
+
 {{- define "chatwoot.redis.url" -}}
 {{- if .Values.redis.enabled -}}
-    redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }}:{{ template "chatwoot.redis.port" . }}
-{{- else if .Values.env.REDIS_TLS -}}
-    rediss://:$(REDIS_PASSWORD)@{{ .Values.redis.host }}:{{ .Values.redis.port }}
+redis://:{{ .Values.redis.auth.password }}@{{ template "chatwoot.redis.host" . }}:{{ template "chatwoot.redis.port" . }}
 {{- else -}}
-    redis://:$(REDIS_PASSWORD)@{{ .Values.redis.host }}:{{ .Values.redis.port }}
+{{- $tls := .Values.env.REDIS_TLS -}}
+{{- $scheme := ternary "rediss" "redis" $tls -}}
+{{- $host := include "chatwoot.redis.host" . | trim -}}
+{{- $port := include "chatwoot.redis.port" . | trim -}}
+{{- $user := default "" .Values.redis.username | trim -}}
+{{- $dbpath := include "chatwoot.redis.externalDatabaseSuffix" . -}}
+{{- if eq (include "chatwoot.redis.externalAclEmbedActive" .) "true" -}}
+{{- $pass := include "chatwoot.redis.password" . -}}
+{{- printf "%s://%s:%s@%s:%s%s" $scheme ($user | urlquery) ($pass | urlquery) $host $port $dbpath -}}
+{{- else if $user -}}
+{{- printf "%s://%s@%s:%s%s" $scheme ($user | urlquery) $host $port $dbpath -}}
+{{- else if $tls -}}
+{{- printf "rediss://%s:%s%s" $host $port $dbpath -}}
+{{- else -}}
+{{- printf "redis://%s:%s%s" $host $port $dbpath -}}
+{{- end -}}
 {{- end -}}
 {{- end -}}
