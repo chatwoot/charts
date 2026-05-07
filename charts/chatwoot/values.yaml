@@ -134,6 +134,8 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
+additionalIngresses: {}
+
 nodeSelector: {}
 
 tolerations: []
