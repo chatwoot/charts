@@ -188,7 +188,10 @@ redis:
   replica:
     replicaCount: 1
 
-# Provide affinity for hooks if needed
+# Migration Job configuration. The Job runs `rails db:chatwoot_prepare`
+# as a regular resource (no Helm hook), with a chart-version-suffixed name
+# so each upgrade spawns a fresh Job. Web/worker pods carry a
+# `wait-for-migrations` initContainer that blocks until the schema is ready.
 hooks:
   affinity: {}
   migrate:
@@ -198,9 +201,6 @@ hooks:
         memory: 1000Mi
       requests:
         memory: 1000Mi
-    # Defaults to performing the DB migration job after the install/upgrade.
-    # Can be overridden to "pre-install,pre-upgrade" with caution to perform migrations that are sometimes required for the deployment to become healthy
-    hookAnnotation: "post-install,post-upgrade"
 
 # ENVIRONMENT VARIABLES
 
