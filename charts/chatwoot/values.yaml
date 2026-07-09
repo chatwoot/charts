@@ -201,6 +201,7 @@ hooks:
     # Defaults to performing the DB migration job after the install/upgrade.
     # Can be overridden to "pre-install,pre-upgrade" with caution to perform migrations that are sometimes required for the deployment to become healthy
     hookAnnotation: "post-install,post-upgrade"
+    hookWeight: -1
 
 # ENVIRONMENT VARIABLES
 
