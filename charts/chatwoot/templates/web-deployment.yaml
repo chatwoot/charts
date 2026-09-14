@@ -40,6 +40,12 @@ spec:
       {{- if .Values.nodeSelector }}
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
+
+      {{- with .Values.web.topologySpreadConstraints }}
+      topologySpreadConstraints:
+        {{- include "common.tplvalues.render" (dict "value" . "context" $) | nindent 8 }}
+      {{- end }}
+
       containers:
         - args:
             - bundle

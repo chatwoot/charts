@@ -22,6 +22,9 @@ web:
     minpods: 1
     maxpods: 10
   replicaCount: 1
+  # Topology spread constraints for web pods
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+  topologySpreadConstraints: []
   livenessProbe:
     initialDelaySeconds: 15
     periodSeconds: 15
@@ -58,6 +61,9 @@ worker:
     minpods: 2
     maxpods: 10
   replicaCount: 2
+  # Topology spread constraints for worker pods
+  # Ref: https://kubernetes.io/docs/concepts/scheduling-eviction/topology-spread-constraints/
+  topologySpreadConstraints: []
   resources: {}
     # We usually recommend not to specify default resources and to leave this as a conscious
     # choice for the user. This also increases chances charts run on environments with little
