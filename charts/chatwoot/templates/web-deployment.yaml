@@ -40,6 +40,41 @@ spec:
       {{- if .Values.nodeSelector }}
       nodeSelector: {{- include "common.tplvalues.render" (dict "value" .Values.nodeSelector "context" $) | nindent 8 }}
       {{- end }}
+      initContainers:
+        - name: wait-for-migrations
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            {{- if .Values.postgresql.auth.existingSecret }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.postgresql.auth.existingSecret }}
+                  key: {{ default "password" .Values.postgresql.auth.secretKeys.adminPasswordKey }}
+            {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ template "chatwoot.fullname" . }}-env
+            {{- if .Values.existingEnvSecret }}
+            - secretRef:
+                name: {{ .Values.existingEnvSecret }}
+            {{- end }}
+          command: ["/bin/sh", "-c"]
+          args:
+            - |
+              set -e
+              echo "waiting for postgres at $POSTGRES_HOST:${POSTGRES_PORT:-5432}..."
+              until pg_isready -h "$POSTGRES_HOST" -p "${POSTGRES_PORT:-5432}" -q; do sleep 2; done
+              echo "postgres reachable; waiting for installation_configs table..."
+              until PGPASSWORD="$POSTGRES_PASSWORD" psql \
+                    -h "$POSTGRES_HOST" -p "${POSTGRES_PORT:-5432}" \
+                    -U "$POSTGRES_USERNAME" -d "$POSTGRES_DATABASE" \
+                    -tAc "SELECT to_regclass('public.installation_configs') IS NOT NULL" 2>/dev/null \
+                    | grep -q '^t$'; do
+                echo "migrations not applied yet; sleeping 2s..."
+                sleep 2
+              done
+              echo "schema ready."
       containers:
         - args:
             - bundle
