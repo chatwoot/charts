@@ -226,3 +226,13 @@ Set redis URL
     redis://:$(REDIS_PASSWORD)@{{ .Values.redis.host }}:{{ .Values.redis.port }}
 {{- end -}}
 {{- end -}}
+
+{{/*
+Short hash suffix used to make the migration Job name unique per
+chart-version / app-version / image-tag combination. Plain Jobs are
+immutable on `spec`, so a new name is required whenever those change,
+otherwise `helm upgrade` would fail to re-apply the migration.
+*/}}
+{{- define "chatwoot.jobSuffix" -}}
+{{- printf "%s-%s-%s" .Chart.AppVersion .Chart.Version (.Values.image.tag | default .Chart.AppVersion | toString) | sha256sum | trunc 7 -}}
+{{- end -}}
