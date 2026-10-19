@@ -192,15 +192,19 @@ redis:
 hooks:
   affinity: {}
   migrate:
-    env: []
+    # Env vars for the migration job only, these take precedence over the app env
+    env:
+      - name: POSTGRES_STATEMENT_TIMEOUT
+        value: "600s"
     resources:
       limits:
         memory: 1000Mi
       requests:
         memory: 1000Mi
-    # Defaults to performing the DB migration job after the install/upgrade.
-    # Can be overridden to "pre-install,pre-upgrade" with caution to perform migrations that are sometimes required for the deployment to become healthy
-    hookAnnotation: "post-install,post-upgrade"
+    # Upgrades run migrations before the new pods roll out, so a failed migration stops the upgrade.
+    # Fresh installs run them after install, since the app env secret does not exist before that.
+    # Long migrations need a matching `helm upgrade --timeout`.
+    hookAnnotation: "post-install,pre-upgrade"
 
 # ENVIRONMENT VARIABLES
 

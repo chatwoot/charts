@@ -182,8 +182,8 @@ Enable Sentinel for high availability with automatic failover. `REDIS_SENTINELS`
 | existingEnvSecret | string | "" | Allows the use of an existing secret to set env variables |
 | fullnameOverride | string | `""` |  |
 | hooks.affinity | object | `{}` |  |
-| hooks.migrate.env | list | `[]` |  |
-| hooks.migrate.hookAnnotation | string | `"post-install,post-upgrade"` |  |
+| hooks.migrate.env | list | `[{"name":"POSTGRES_STATEMENT_TIMEOUT","value":"600s"}]` |  |
+| hooks.migrate.hookAnnotation | string | `"post-install,pre-upgrade"` |  |
 | hooks.migrate.resources.limits.memory | string | `"1000Mi"` |  |
 | hooks.migrate.resources.requests.memory | string | `"1000Mi"` |  |
 | imagePullSecrets | list | `[]` |  |
